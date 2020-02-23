@@ -2,6 +2,7 @@ package com.example.gpslocation;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
@@ -10,13 +11,18 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
+
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -30,6 +36,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -46,7 +54,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     static Place placee;
     TextView textView;
     ImageView iGps;
-
+    Button button;
+    TextView textView1,textView2;
+    ImageView imageView;
+    LatLng egypt, latLng;
 
 
     @Override
@@ -57,6 +68,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mSearchText = findViewById(R.id.input_search);
         textView = findViewById(R.id.txtInfo);
 
+        button = findViewById(R.id.location);
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
@@ -64,11 +76,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         final String TAG = "placeautocomplete";
 
 
+
         Places.initialize(getApplicationContext(), "AIzaSyC7npciCk9aHTEBrlW_vjdI7TI0Z5PhJ7Y");
         PlacesClient placesClient = Places.createClient(this);
         autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+        button= findViewById(R.id.location);
+
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
@@ -83,6 +98,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 try {
                     addressList = geocoder.getFromLocationName(searchString, 1);
+
+
                 } catch (IOException e) {
                     Log.d(TAG, "geoLocate: " + e.getMessage());
                 }
@@ -91,12 +108,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Address address = addressList.get(0);
                     addressList.get(0).toString();
                     Log.i("PlaceInfo", addressList.toString());
-                    LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     mMap.getUiSettings().setZoomControlsEnabled(true);
 
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
                     mMap.addMarker(new MarkerOptions().position(latLng).title(address.getCountryName())).showInfoWindow();
+                    location_setting(latLng,address.getCountryName());
                     mSearchText.setText(place.getName());
+
                 }
             }
 
@@ -107,10 +126,55 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
+    public void location_setting(LatLng latLng1, String name){
+
+
+
+        final BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MapsActivity.this,R.style.ButtonSheetDialog);
+
+        View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.bottom_sheet,
+                (LinearLayout)findViewById(R.id.layoutcontener));
+        textView1 = view.findViewById(R.id.sorrytx);
+        textView2 = view.findViewById(R.id.locationtx);
+
+
+        imageView = view.findViewById(R.id.imageView2);
+        egypt= new LatLng(26.8205528 ,30.8024979);
+        if (latLng1.longitude != egypt.longitude &&latLng1.latitude!=egypt.latitude){
+            String sorry = getString(R.string.sorry).toString();
+            textView1.setText(sorry);
+           textView2.setText(name);
+            imageView.setBackgroundResource(R.drawable.imag);
+        }
+        view.findViewById(R.id.letyourbt).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(MapsActivity.this,Phone.class);
+                startActivity(intent);
+
+
+                bottomSheetDialog.dismiss();
+            }
+        });
+        bottomSheetDialog.setContentView(view);
+        bottomSheetDialog.show();
+
+    }
+
+
+
+
+        @Override
+    public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
         locationManager = (LocationManager) this.getSystemService(Context.LOCATION_SERVICE);
                                                 mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -119,6 +183,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                     mMap.addMarker(new MarkerOptions().position(marker.getPosition()).title("I Am Here ")).showInfoWindow();
                     mMap.getUiSettings().setZoomControlsEnabled(true);
+                    mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
                     return false;
                 }});
@@ -130,6 +195,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(new MarkerOptions().position(here).title("I Am Here ")).showInfoWindow();
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(here,13));
                 mMap.getUiSettings().setZoomControlsEnabled(true);
+                location_setting(here,getString(R.string.locationnotsupported).toString());
 
 
                 iGps.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +207,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         mMap.getUiSettings().setZoomControlsEnabled(true);
 
                         mSearchText.setText("I Am Here Hello ");
+                        location_setting(here2,getString(R.string.locationnotsupported).toString());
+
                     }
                 });}
 

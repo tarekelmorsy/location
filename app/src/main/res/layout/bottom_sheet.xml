@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:pointerIcon="alias"
+    android:background="@drawable/backg"
+    android:fontFamily="@font/badar"
+
+
+    android:id="@+id/layoutcontener">
+
+
+    <ImageView
+        android:layout_gravity="center"
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:padding="5dp"
+        android:background="@drawable/imag"
+        android:src="@drawable/ic_location_on_white_24dp"
+/>
+
+    <TextView
+        android:id="@+id/sorrytx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="input"
+        android:fontFamily="@font/cairosemibold"
+
+        android:gravity="center"
+        android:layout_margin="10dp"
+        android:textColor="@color/cardview_dark_background"
+
+
+        android:textSize="20sp"/>
+
+    <TextView
+        android:id="@+id/locationtx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="input"
+        android:gravity="center"
+        android:layout_margin="5dp"
+        android:textColor="#5044B8"
+        android:fontFamily="@font/cairosemibold"
+
+        android:textSize="20sp" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="20dp"
+        >
+
+
+        <Button
+            android:id="@+id/letyourbt"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/cairosemibold"
+            android:layout_marginRight="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button"
+            android:text="@string/let_us_know_your"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textColor="#ffffff" />
+
+        <Button
+            android:id="@+id/change_location_bt"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/button2"
+            android:fontFamily="@font/cairosemibold"
+            android:text="@string/change_location"
+            android:textColor="@color/cardview_dark_background"
+            android:textIsSelectable="true" />
+    </LinearLayout>
+
+
+</LinearLayout>
