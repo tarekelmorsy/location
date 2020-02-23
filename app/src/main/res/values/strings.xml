@@ -7,4 +7,5 @@
     <string name="suggest_this_location">Suggest this location</string>
     <string name="change_location">change location</string>
     <string name="let_us_know_your">Let us know Your</string>
+    <string name="deliver">Deliver to current location?</string>
 </resources>

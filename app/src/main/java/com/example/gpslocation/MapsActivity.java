@@ -1,6 +1,7 @@
 package com.example.gpslocation;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -57,7 +58,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button button;
     TextView textView1,textView2;
     ImageView imageView;
-    LatLng egypt, latLng;
+    LatLng egypt = new LatLng(26.8205528 ,30.8024979)
+, latLng ;
+    Address address;
 
 
     @Override
@@ -105,7 +108,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 }
 
                 if (addressList.size() > 0) {
-                    Address address = addressList.get(0);
+                     address = addressList.get(0);
                     addressList.get(0).toString();
                     Log.i("PlaceInfo", addressList.toString());
                      latLng = new LatLng(address.getLatitude(), address.getLongitude());
@@ -134,6 +137,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+    @SuppressLint("SetTextI18n")
     public void location_setting(LatLng latLng1, String name){
 
 
@@ -153,6 +157,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             textView1.setText(sorry);
            textView2.setText(name);
             imageView.setBackgroundResource(R.drawable.imag);
+        }else {
+
+            imageView.setBackgroundResource(R.drawable.imaggre);
+            textView1.setText(R.string.deliver);
+            textView2.setText(name);
+
+
         }
         view.findViewById(R.id.letyourbt).setOnClickListener(new View.OnClickListener() {
             @Override
