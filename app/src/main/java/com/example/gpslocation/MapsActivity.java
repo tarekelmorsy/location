@@ -58,7 +58,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     Button button;
     TextView textView1,textView2;
     ImageView imageView;
-    LatLng egypt = new LatLng(26.8205528 ,30.8024979)
+    LatLng egypt = new LatLng( 35.3626542,26.8450586)
 , latLng ;
     Address address;
 
@@ -80,7 +80,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        Places.initialize(getApplicationContext(), "AIzaSyC7npciCk9aHTEBrlW_vjdI7TI0Z5PhJ7Y");
+        Places.initialize(getApplicationContext(), "AIzaSyDZBBzdhWw64zTG3F-sHCyrsdMTL_zvtXE");
         PlacesClient placesClient = Places.createClient(this);
         autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
@@ -151,7 +151,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         imageView = view.findViewById(R.id.imageView2);
-        egypt= new LatLng(26.8205528 ,30.8024979);
         if (latLng1.longitude != egypt.longitude &&latLng1.latitude!=egypt.latitude){
             String sorry = getString(R.string.sorry).toString();
             textView1.setText(sorry);
@@ -162,6 +161,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             imageView.setBackgroundResource(R.drawable.imaggre);
             textView1.setText(R.string.deliver);
             textView2.setText(name);
+            Button set =view.findViewById(R.id.letyourbt);
+            set.setText("Let's Go");
+
 
 
         }
