@@ -39,7 +39,19 @@ dependencies {
     implementation 'com.google.android.gms:play-services-fitness:18.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
     apply plugin: 'announce'
-    compile 'com.android.support:design:29.2.0'
+
+
+
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+
+
+
+
+// ViewModell and LiveData
+    def lifecycle_version = "2.2.0"
+    implementation "androidx.lifecycle:lifecycle-extensions:$lifecycle_version"
+
 
 
 }
