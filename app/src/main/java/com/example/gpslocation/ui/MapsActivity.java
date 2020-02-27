@@ -127,7 +127,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         viewModell.getMutableLiveDataSupportwdLocation().observe(this, new Observer<SupportwdLocation>() {
             @Override
             public void onChanged(SupportwdLocation supportwdLocation) {
-                txsuccessful.setText(supportwdLocation.getResult().getNameAr() + "," + supportwdLocation.getResult().getCity().getNameAr());
+                txsuccessful.setText(supportwdLocation.getResult().getCity().getNameAr()+","+supportwdLocation.getResult().getNameAr());
 
                // txsearch.setText(supportwdLocation.getResult().getName() + supportwdLocation.getResult().getCity().getName());
                 location.setText(R.string.next);

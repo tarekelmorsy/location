@@ -57,72 +57,82 @@
         android:layout_height="100dp" />
 
 
-    <Button
-        android:id="@+id/location"
-        android:layout_width="350dp"
-        android:layout_height="55dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentBottom="true"
-
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/bgbuttonnext"
-        android:textColor="#ffffff"
-        android:textSize="20sp" />
 
 
-    <TextView
-        android:id="@+id/txSuccessful"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/location"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginLeft="103dp"
-        android:layout_marginEnd="112dp"
-        android:layout_marginRight="112dp"
-        android:layout_marginBottom="11dp"
-        android:background="@drawable/bgtxnotsuccessful"
-        android:foregroundGravity="center_vertical|center_horizontal"
-        android:gravity="center|center_vertical"
-        android:padding="5dp"
-        android:paddingLeft="4dp"
-        android:paddingRight="4dp"
-        android:text="@string/sorry"
-        android:textColor="#ffffff"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
-    <ImageView
-        android:id="@+id/lesner"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
 
 
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="173dp"
-        android:layout_marginBottom="331dp"
-        android:outlineSpotShadowColor="@color/common_google_signin_btn_text_light_pressed"
-        android:src="@drawable/shape_foreground" />
 
-    <ImageView
+
+
+
+
+    <ImageButton
         android:id="@+id/ic_gps"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginLeft="355dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_marginBottom="78dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="95dp"
         android:background="@drawable/bgbuttonnext"
         android:padding="7dp"
-        android:src="@drawable/ic_gps_fixed_black_24dp" />
+        android:src="@drawable/ic_gps_fixed_black_24dp"
+        android:layout_marginLeft="20dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+        <LinearLayout
+            android:id="@+id/location_card_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="110dp"
+            android:layout_marginRight="11dp"
+            android:layout_marginBottom="10dp"
+            android:elevation="8dp"
+
+
+            >
+            <TextView
+                android:id="@+id/txSuccessful"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/bgtxnotsuccessful"
+                android:lineHeight="15sp"
+                android:lineSpacingExtra="1sp"
+                android:maxLines="1"
+                android:paddingStart="7dp"
+                android:paddingEnd="7dp"
+                android:textSize="14sp"
+                android:textColor="#ffffff"
+                android:textStyle="italic"
+                tools:text="الدمام, حى الازهار" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/location"
+
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_below="@+id/location_card_view"
+            android:layout_centerHorizontal="true"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="34dp"
+            android:background="@drawable/bgbuttonnext"
+            android:textColor="#ffffff"
+            android:textSize="20sp" />
+    </RelativeLayout>
+    <ImageView
+        android:id="@+id/lesner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:src="@drawable/shape_foreground" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 
 </RelativeLayout>
