@@ -6,7 +6,8 @@
     <string name="locationnotsupported">الموقع غير مدعوم </string>
     <string name="sorry">آسف ، موقعك خارج التغطية</string>
     <string name="textsotty">الموقع غير مدعوم</string>
-    <string name="suggest_this_location">أقترح هذا الموقع</string>
+    <string name="bt_suggest_this_location">أقترح هذا الموقع</string>
+    <string name="next">التالي</string>
     <string name="change_location">تغيير الموقع</string>
     <string name="let_us_know_your">اخبرنا</string>
     <string name="deliver">تسليم إلى الموقع الحالي؟</string>

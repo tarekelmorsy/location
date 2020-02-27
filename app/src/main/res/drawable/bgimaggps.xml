@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-<solid android:color="@color/button_Color"/>
-    <corners android:radius="30dp"/>
+    <gradient android:startColor="@color/tx_Successful_end_Color" android:endColor="@color/button_Color"/>
 
 </shape>

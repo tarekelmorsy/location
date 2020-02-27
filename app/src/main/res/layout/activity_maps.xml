@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <fragment
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
@@ -24,13 +23,7 @@
         android:background="@drawable/white_border"
         android:id="@+id/relLayout1">
 
-        <ImageView
-            android:layout_width="15dp"
-            android:layout_height="15dp"
-            android:id="@+id/ic_magnify"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
-            android:src="@drawable/search"/>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,13 +39,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/ic_magnify"
             android:background="@null"
             android:foregroundGravity="center_vertical|center|center_horizontal"
             android:gravity="center|center_horizontal|center_vertical"
             android:imeOptions="actionSearch"
             android:textColor="#000"
-            android:textSize="15sp" />
+            android:textSize="14sp" />
 
 
     </RelativeLayout>
@@ -65,58 +57,73 @@
         android:layout_height="100dp" />
 
 
-    <ImageView
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_below="@id/relLayout1"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="10dp"
-        android:padding="6dp"
-        android:background="@drawable/bgbuttonnext"
-        android:scaleType="centerCrop"
-        android:id="@+id/ic_gps"
-        android:src="@drawable/ic_gps_fixed_black_24dp"/>
-
     <Button
         android:id="@+id/location"
-        android:textColor="#ffffff"
-        android:layout_width="400dp"
-        android:layout_height="50dp"
+        android:layout_width="375dp"
+        android:layout_height="62dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20dp"
+
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="4dp"
+        android:layout_marginBottom="10dp"
         android:background="@drawable/bgbuttonnext"
-        android:text="@string/suggest_this_location" />
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/txSuccessful"
-        android:layout_width="200dp"
-
+        android:paddingLeft="4dp"
+        android:paddingRight="4dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/location"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginEnd="94dp"
-        android:layout_marginRight="94dp"
-        android:layout_marginBottom="11dp"
+        android:layout_marginEnd="124dp"
+        android:layout_marginRight="87dp"
+        android:layout_marginBottom="13dp"
         android:background="@drawable/bgtxnotsuccessful"
         android:foregroundGravity="center_vertical|center_horizontal"
         android:gravity="center|center_vertical"
         android:text="@string/textsotty"
-        android:textColor="#ffffff" />
+        android:padding="3dp"
+
+
+        android:textColor="#ffffff"
+        android:textSize="14sp" />
+
 
     <ImageView
         android:id="@+id/lesner"
         android:layout_width="50dp"
         android:layout_height="50dp"
 
-        android:layout_marginStart="184dp"
-        android:layout_marginLeft="177dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="177dp"
-        android:layout_marginRight="184dp"
-        android:layout_marginBottom="338dp"
-        android:src="@drawable/ic_location__50dp" />
+
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="182dp"
+        android:layout_marginBottom="339dp"
+        android:outlineSpotShadowColor="@color/common_google_signin_btn_text_light_pressed"
+        android:src="@drawable/shape_foreground" />
+
+    <ImageView
+        android:id="@+id/ic_gps"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_below="@id/relLayout1"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
 
 
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="486dp"
+        android:layout_marginEnd="17dp"
+        android:layout_marginRight="334dp"
+        android:background="@drawable/bgbuttonnext"
+        android:padding="9dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_gps_fixed_black_24dp" />
 </RelativeLayout>
