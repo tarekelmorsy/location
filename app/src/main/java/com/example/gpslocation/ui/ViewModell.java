@@ -21,9 +21,9 @@ public class ViewModell extends ViewModel {
 
     }
 
-    public void  getretrofit(Double jj,Double jjj){
+    public void  getretrofit(Double lat,Double lon){
 
-        repository.getData(jj,jjj);
+        repository.getData(lat,lon);
     }
 
     public MutableLiveData<SupportwdLocation> getMutableLiveDataSupportwdLocation(){

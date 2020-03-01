@@ -55,17 +55,6 @@
         android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
         android:layout_width="match_parent"
         android:layout_height="100dp" />
-
-
-
-
-
-
-
-
-
-
-
     <ImageButton
         android:id="@+id/ic_gps"
         android:layout_width="40dp"
@@ -90,8 +79,6 @@
             android:layout_marginRight="11dp"
             android:layout_marginBottom="10dp"
             android:elevation="8dp"
-
-
             >
             <TextView
                 android:id="@+id/txSuccessful"
@@ -107,7 +94,7 @@
                 android:textSize="14sp"
                 android:textColor="#ffffff"
                 android:textStyle="italic"
-                tools:text="الدمام, حى الازهار" />
+                tools:text="الخبر ,الخبر " />
         </LinearLayout>
         <Button
             android:id="@+id/location"

@@ -65,6 +65,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iGps = (ImageView) findViewById(R.id.ic_gps);
         txsearch = findViewById(R.id.input_search);
         txsuccessful = findViewById(R.id.txSuccessful);
+        setupobserve();
 
         location=findViewById(R.id.location);
 
@@ -118,7 +119,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
-        setupobserve();
 
     }
     public void setupobserve(){
