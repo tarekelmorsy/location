@@ -5,9 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.gpslocation.model.ErrorResponse;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.google.gson.Gson;
-
 import java.io.IOException;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -15,9 +13,9 @@ import retrofit2.Retrofit;
 
 public class Repository {
 
-    MutableLiveData<SupportwdLocation> mutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<SupportwdLocation> mutableLiveData = new MutableLiveData<>();
 
-    MutableLiveData<ErrorResponse> errorResponseMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<ErrorResponse> errorResponseMutableLiveData = new MutableLiveData<>();
 
     private static Repository INSTANCE;
     private ApiInterface apiInterface;
@@ -66,32 +64,15 @@ public class Repository {
 
             }
         });
-
-
-
-
-
-
     }
 
 
     public MutableLiveData <SupportwdLocation> getMutableLiveDataSupportwdLocation(){
         return mutableLiveData;
-
-
     }
 
     public MutableLiveData <ErrorResponse> getMutableLiveDataeror(){
 
         return errorResponseMutableLiveData;
-
-
     }
-
-
-
-
-
-
-
 }
