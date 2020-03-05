@@ -55,9 +55,7 @@ public class Repository {
     public void getData(final Double lat, Double lon) {
         Observable observable = apiInterface.gitSuccessful(lat, lon)
                 .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread());
-
-
+                .observeOn(AndroidSchedulers.mainThread());
 
         Observer<SupportwdLocation> observer1 = new Observer<SupportwdLocation>() {
             @Override
@@ -85,7 +83,7 @@ public class Repository {
                     }
                 }
 
-                    }
+            }
             @Override
             public void onComplete() {
 

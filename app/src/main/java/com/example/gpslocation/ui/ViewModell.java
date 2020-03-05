@@ -34,8 +34,6 @@ public class ViewModell extends ViewModel {
 
     public MutableLiveData <ErrorResponse> getMutableLiveDataError(){
         return repository.getMutableLiveDataeror();
-
-
     }
 
 }
