@@ -14,7 +14,7 @@
 
     <ImageView
         android:layout_gravity="center"
-        android:id="@+id/imageView2"
+        android:id="@+id/igIcon"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:padding="5dp"

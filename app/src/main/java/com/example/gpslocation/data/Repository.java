@@ -4,11 +4,14 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.gpslocation.model.ErrorResponse;
 import com.example.gpslocation.model.SupportwdLocation;
-import com.google.gson.Gson;
+
 import java.io.IOException;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import io.reactivex.Observable;
+import io.reactivex.Observer;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
 public class Repository {
@@ -38,34 +41,6 @@ public class Repository {
     }
 
 
-    public void getData( Double lat,Double lon) {
-   apiInterface.gitSuccessful(lat,lon  ).enqueue(new Callback<SupportwdLocation>() {
-            @Override
-            public void onResponse(Call<SupportwdLocation> call, Response<SupportwdLocation> response) {
-
-                if(response.isSuccessful()){
-                    mutableLiveData.setValue(response.body());
-                }
-                else {
-                    try {
-                        ErrorResponse errorResponse = new Gson().fromJson(response.errorBody().string(),ErrorResponse.class);
-
-                        errorResponseMutableLiveData.postValue(errorResponse);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<SupportwdLocation> call, Throwable t) {
-
-
-            }
-        });
-    }
-
 
     public MutableLiveData <SupportwdLocation> getMutableLiveDataSupportwdLocation(){
         return mutableLiveData;
@@ -75,4 +50,52 @@ public class Repository {
 
         return errorResponseMutableLiveData;
     }
+
+
+    public void getData(final Double lat, Double lon) {
+        Observable observable = apiInterface.gitSuccessful(lat, lon)
+                .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread());
+
+
+
+        Observer<SupportwdLocation> observer1 = new Observer<SupportwdLocation>() {
+            @Override
+            public void onSubscribe(Disposable d) {
+
+            }
+
+            @Override
+            public void onNext(SupportwdLocation supportwdLocations) {
+                mutableLiveData.postValue( supportwdLocations);
+
+
+                };
+
+
+            @Override
+            public void onError(Throwable e) {
+                if (e instanceof RetrofitException) {
+                    try {
+                        RetrofitException retrofitException = (RetrofitException) e;
+                        ErrorResponse errorResponse = retrofitException.getErrorBodyAs(ErrorResponse.class);
+                        errorResponseMutableLiveData.postValue(errorResponse);
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+
+                    }
+            @Override
+            public void onComplete() {
+
+            }
+
+        };
+
+
+        observable.subscribe(observer1);
+    }
+
+
 }
