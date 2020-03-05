@@ -7,6 +7,7 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
@@ -81,6 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iGps = (ImageView) findViewById(R.id.ic_gps);
         txsearch = findViewById(R.id.input_search);
 
+
         txsuccessful = findViewById(R.id.txSuccessful);
         gg=true;
 
@@ -134,12 +137,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
-
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPlaceSelected(@NonNull Place place) {
+             //   KeyboardView.OnClickListener(new );
+
                 placee = place;
+              //  autocompleteFragment.a;
+
                 String searchString = placee.getName();
                 txsearch.setText(searchString);
                 Geocoder geocoder = new Geocoder(MapsActivity.this);
