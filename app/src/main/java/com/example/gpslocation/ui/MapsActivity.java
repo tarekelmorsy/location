@@ -14,11 +14,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -52,6 +52,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     FusedLocationProviderClient mFusedLocationClient;
@@ -69,10 +70,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean mPremissionGranted = false;
     boolean mGpsEnabled = false;
     private View mapView;
-    DialogFragment dialogFragment;
-    String supportwdLocation1, supportwdLocation3,country;
+    String supportwdLocation1,country;
     boolean issuppotted = false;
     boolean gg= false;
+    boolean booleanPermission,l;
 
 
 
@@ -98,15 +99,25 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onClick(View v) {
 
-
+                booleanPermission =false;
                 gg=false;
-                Permission();
+
+
+
+
+                    Permission();
+
+
+
+
                 getDeviceLocation();
             }
         });
         location.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 if (issuppotted) {
                     getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
                 } else {
@@ -118,17 +129,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         });
+        if (l){
+            if (issuppotted) {
+                getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
+            } else {
+                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
 
-    }
 
-    public void getString(String s) {
-        if (issuppotted) {
-            getdialogFragment(issuppotted, s, "نوصل لك عالموقع الحالي؟");
-        } else {
-            getdialogFragment(issuppotted, s, "للأسف،  مكانك برا التغطية");
+            }
         }
 
     }
+
+
 
     public void setPlacee() {
         final String TAG = "placeautocomplete";
@@ -138,15 +151,28 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
+        int AUTOCOMPLETE_REQUEST_CODE = 1;
+       // int AUTOCOMPLETE_REQUEST_CODE = 1;
+
+// Set the fields to specify which types of place data to
+// return after the user has made a selection.
+        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
+        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
+
+// Start the autocomplete intent.
+
+
+
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-             //   KeyboardView.OnClickListener(new );
+                //   KeyboardView.OnClickListener(new );
 
+                autocompleteFragment.a.extendSelection(0);
                 placee = place;
-              //  autocompleteFragment.a;
+                //  autocompleteFragment.a;
 
                 String searchString = placee.getName();
                 txsearch.setText(searchString);
@@ -163,12 +189,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Log.i("PlaceInfo", addressList.toString());
                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     //  mMap.getUiSettings().setZoomControlsEnabled(true);
-                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10));
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     txsearch.setText(place.getName());
 
 
                 }
-                autocompleteFragment.setText("");
 
             }
 
@@ -205,7 +230,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
 
-                             //   supportwdLocation3 = latLng.toString();
+                                //   supportwdLocation3 = latLng.toString();
                                 //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                         latLng, 14);
@@ -220,7 +245,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                     if (addresses.size() > 0) {
                                         country = addresses.get(0).getAddressLine(0);
                                         Log.d("TAG", "onCameraMove/: " + country);
-                                       // searchText.setText(country);
+                                        // searchText.setText(country);
                                     }
                                 } catch (IOException e) {
                                     e.printStackTrace();
@@ -228,9 +253,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 country = addresses.get(0).getAddressLine(0);
 
-                                if (gg){
+                                if (gg || booleanPermission){
 
-                                    if (issuppotted) {
+                                    if (issuppotted ) {
                                         getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
                                     } else {
                                         getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
@@ -257,6 +282,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onPermissionGranted() {
                 mPremissionGranted = true;
+
                 initMap();
                 if (checkPermission()) {
                     getDeviceLocation();
@@ -267,7 +293,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
                 mPremissionGranted = false;
-                //Toast.makeText(MapsActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+l=true;
+                if (issuppotted) {
+                    getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
+                } else {
+                    getdialogFragment(issuppotted, "قاعدة الملك عبد العزيز الجوية، الظهران السعودية", "للأسف،  مكانك برا التغطية");
+
+
+                }
+                LatLng latLng= new LatLng(26.2907608,50.1757243);
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+
+
+
+               // Toast.makeText(MapsActivity.this, "Permisllllllllllllllsion Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
         };
         TedPermission.with(this)
@@ -316,7 +355,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             mGpsEnabled = false;
-            showGPSDisabledAlertToUser();
+            //showGPSDisabledAlertToUser();
+            Toast.makeText(this, "من فضلك قم بتفعيل GPS لنتمكن من تحديد موقعك ", Toast.LENGTH_SHORT).show();
             return false;
         } else {
             mGpsEnabled = true;
@@ -326,7 +366,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void getdialogFragment(boolean b, String s, String s2) {
 
-        dialogFragment = new DialogFragment();
+        DialogFragmenttt dialogFragment = new DialogFragmenttt();
         dialogFragment.show(getSupportFragmentManager(), null);
         Bundle bundle = new Bundle();
         bundle.putString("user", s);
@@ -385,7 +425,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     txsearch.setText(address2.getFeatureName() + address2.getCountryName() + address2.getLocality());
                     autocompleteFragment.setText("");
 
-                    supportwdLocation3 = address2.getFeatureName() + address2.getCountryName() + address2.getLocality();
+                   // supportwdLocation3 = address2.getFeatureName() + address2.getCountryName() + address2.getLocality();
+                    country =  address2.getAddressLine(0);
+
                 }
 
             }

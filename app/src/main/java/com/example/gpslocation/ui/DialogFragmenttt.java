@@ -16,7 +16,7 @@ import androidx.annotation.Nullable;
 
 import com.example.gpslocation.R;
 
-public class DialogFragment     extends androidx.fragment.app.DialogFragment {
+public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
     Button button1, button2;
     TextView textView1, textView2;
@@ -32,26 +32,26 @@ public class DialogFragment     extends androidx.fragment.app.DialogFragment {
 
     }
 
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         button1 = view.findViewById(R.id.btsecondlocation);
         button2 = view.findViewById(R.id.btgo);
-        frameLayout = view.findViewById(R.id.llll);
+        frameLayout = view.findViewById(R.id.ll);
         textView1 = view.findViewById(R.id.txissuccessful);
         textView2 = view.findViewById(R.id.location);
         imageView = view.findViewById(R.id.igIcon);
-// getDialog().setCanceledOnTouchOutside(true);
-
         frameLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dismiss();
-               // getDialog().setCanceledOnTouchOutside(true);
-
-            }
+                dismiss();            }
         });
+
+
+
+
 
         Bundle bundle = getArguments();
         if (bundle.getBoolean("Status") == true) {
