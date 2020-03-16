@@ -1,7 +1,5 @@
 package com.example.gpslocation.ui;
 import android.Manifest;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,14 +16,15 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gpslocation.R;
 import com.example.gpslocation.model.ErrorResponse;
+import com.example.gpslocation.model.IsSupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocation;
+import com.example.gpslocation.model.SupportwdLocationDetails;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -65,82 +64,77 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private LatLng latLng, newLocation;
     private Address address, address2;
     public CameraPosition cameraPosition;
-    private ViewModell viewModell;
+    public static ViewModell viewModell;
     private Button location;
     boolean mPremissionGranted = false;
     boolean mGpsEnabled = false;
     private View mapView;
-    String supportwdLocation1,country;
+    String supportwdLocation1, country;
     boolean issuppotted = false;
-    boolean gg= false;
-    boolean booleanPermission,l;
+    boolean gg = false;
+    boolean closedialog = true;
+    boolean booleanPermission, l;
+    boolean booleanDeni = true;
+    public static boolean checkLocationSupport = false;
+    DialogFragmenttt dialogFragment;
+    Bundle bundle = new Bundle();
+    static SupportwdLocationDetails supportwdLocationDetails = null;
 
-
+    static  String MODE_PRIVATE="lll";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        Permission();
+        // Permission();
         iGps = (ImageView) findViewById(R.id.ic_gps);
         txsearch = findViewById(R.id.input_search);
-
-
         txsuccessful = findViewById(R.id.txSuccessful);
-        gg=true;
+        gg = true;
 
 
+        String languageToLoad = "ar";
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
         setupobserve();
         location = findViewById(R.id.location);
         initMap();
         setPlacee();
+        Permission();
 
-        iGps.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        iGps.setOnClickListener(v -> {
 
-                booleanPermission =false;
-                gg=false;
+            booleanPermission = false;
+            gg = false;
+            booleanDeni = false;
+            closedialog = false;
+            Permission();
 
-
-
-
-                    Permission();
-
-
-
-
-                getDeviceLocation();
-            }
+            getDeviceLocation();
         });
-        location.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        location.setOnClickListener(v -> {
 
 
-                if (issuppotted) {
-                    getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
-                } else {
-                    getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
-
-
-                }
-
-
-            }
-        });
-        if (l){
             if (issuppotted) {
-                getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
+                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
             } else {
                 getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
 
 
             }
+
+
+        });
+        if (l) {
+            if (issuppotted) {
+                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
+            } else {
+                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
+
+            }
         }
 
     }
-
 
 
     public void setPlacee() {
@@ -151,29 +145,20 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
-        int AUTOCOMPLETE_REQUEST_CODE = 1;
-       // int AUTOCOMPLETE_REQUEST_CODE = 1;
-
-// Set the fields to specify which types of place data to
-// return after the user has made a selection.
-        List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.NAME);
-        autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
-
-// Start the autocomplete intent.
-
-
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
 
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                //   KeyboardView.OnClickListener(new );
 
                 autocompleteFragment.a.extendSelection(0);
                 placee = place;
-                //  autocompleteFragment.a;
 
+
+                String languageToLoad = "ar";
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
                 String searchString = placee.getName();
                 txsearch.setText(searchString);
                 Geocoder geocoder = new Geocoder(MapsActivity.this);
@@ -212,10 +197,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mapView = mapFragment.getView();
+
     }
 
     public void getDeviceLocation() {
-        String sss;
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         try {
             if (mPremissionGranted) {
@@ -229,9 +214,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                             if (location != null) {
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-
-                                //   supportwdLocation3 = latLng.toString();
-                                //mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 14));
+                                String languageToLoad = "ar";
+                                Locale locale = new Locale(languageToLoad);
+                                Locale.setDefault(locale);
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                         latLng, 14);
                                 mMap.animateCamera(cameraUpdate);
@@ -253,15 +238,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                                 country = addresses.get(0).getAddressLine(0);
 
-                                if (gg || booleanPermission){
+                                if (gg || booleanPermission) {
 
-                                    if (issuppotted ) {
-                                        getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
+                                    if (issuppotted) {
+                                        getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
                                     } else {
                                         getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
 
 
-                                    }}
+                                    }
+                                }
                             }
                         }
                     }
@@ -272,9 +258,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Log.e("Exception: %s", e.getMessage());
 
         }
-
-
-
     }
 
     public void Permission() {
@@ -293,20 +276,42 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
                 mPremissionGranted = false;
-l=true;
-                if (issuppotted) {
-                    getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
+                LatLng latLng = new LatLng(26.2561426, 50.1820928);
+                if (booleanDeni) {
+                    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+                }
+
+                Geocoder geocoder;
+                String country1;
+                String languageToLoad = "ar";
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
+
+                List<Address> addresses = new ArrayList<>();
+                geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                try {
+                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
+                    if (addresses.size() > 0) {
+                        country1 = addresses.get(0).getAddressLine(0);
+                        Log.d("TAG", "onCameraMove/: " + country1);
+                        // searchText.setText(country);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                country1 = addresses.get(0).getAddressLine(0);
+
+                l = true;
+                if (issuppotted || closedialog == false) {
+                    //  getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
                 } else {
-                    getdialogFragment(issuppotted, "قاعدة الملك عبد العزيز الجوية، الظهران السعودية", "للأسف،  مكانك برا التغطية");
+                    getdialogFragment(issuppotted, country1, "للأسف،  مكانك برا التغطية");
 
 
                 }
-                LatLng latLng= new LatLng(26.2907608,50.1757243);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
 
-
-
-               // Toast.makeText(MapsActivity.this, "Permisllllllllllllllsion Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
+                // Toast.makeText(MapsActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
         };
         TedPermission.with(this)
@@ -315,25 +320,44 @@ l=true;
                 .check();
     }
 
+    public String lll() {
+        //Bundle bundle = new Bundle();
+        MapsActivity.checkLocationSupport = true;
+        final IsSupportwdLocation[] isSupportwdLocationn = {new IsSupportwdLocation()};
+
+        MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe(MapsActivity.this, new Observer<IsSupportwdLocation>() {
+            @Override
+            public void onChanged(IsSupportwdLocation isSupportwdLocation) {
+
+
+                bundle.putString("userr", isSupportwdLocation.toString());
+
+                isSupportwdLocationn[0] = isSupportwdLocation;
+                Log.d("pppppppp", isSupportwdLocation.getMessage());
+
+            }
+        });
+
+        return (bundle.getString("userr"));
+    }
+
     public void setupobserve() {
         viewModell = new ViewModelProvider(this).get(ViewModell.class);
         viewModell.getMutableLiveDataSupportwdLocation().observe(this, new Observer<SupportwdLocation>() {
             @Override
             public void onChanged(SupportwdLocation supportwdLocation) {
-                //supportwdLocation1.equals(supportwdLocation);
                 issuppotted = true;
-                supportwdLocation1 = (supportwdLocation.getResult().getCity().getNameAr() + "," + supportwdLocation.getResult().getNameAr()).toString();
+                checkLocationSupport = false;
+
                 txsuccessful.setText(supportwdLocation.getResult().getCity().getNameAr() + "," + supportwdLocation.getResult().getNameAr());
                 // txsearch.setText(supportwdLocation.getResult().getName() + supportwdLocation.getResult().getCity().getName());
                 location.setText(R.string.next);
-                //dialogFragment.getDialog().setCanceledOnTouchOutside(true);
                 txsuccessful.setBackgroundResource(R.drawable.bgtxissuccessful);
-
-                //  getdialogFragment(supportwdLocation.getStatus(), (supportwdLocation.getResult().getCity().getNameAr() + "," + supportwdLocation.getResult().getNameAr()).toString(), "نوصل لك عالموقع الحالي؟");
-
+                Log.d("tttttttt", supportwdLocation.getResult().getName());
 
             }
         });
+
 
         viewModell.getMutableLiveDataError().observe(this, new Observer<ErrorResponse>() {
             @Override
@@ -341,14 +365,22 @@ l=true;
                 txsuccessful.setText(errorResponse.getMessageAr());
                 location.setText(R.string.bt_suggest_this_location);
                 issuppotted = false;
+                checkLocationSupport = false;
 
                 txsuccessful.setBackgroundResource(R.drawable.bgtxnotsuccessful);
             }
         });
     }
 
-    public void location_setting(double lat, double lan, final String name) {
+    public void location_setting(double lat, double lan) {
         viewModell.getretrofit(lat, lan);
+        // viewModell.getDetail(supportwdLocationDetails);
+
+    }
+
+    public static void getSupportedLocationDetails(SupportwdLocationDetails supportwdLocationDetails) {
+        viewModell.getDetail(supportwdLocationDetails);
+
     }
 
     public boolean checkPermission() {
@@ -356,6 +388,22 @@ l=true;
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             mGpsEnabled = false;
             //showGPSDisabledAlertToUser();
+            String languageToLoad = "ar";
+            Locale locale = new Locale(languageToLoad);
+            Locale.setDefault(locale);
+            booleanDeni = false;
+
+            // LatLng latLng = new LatLng(26.2561426, 50.1820928);
+            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
+            if (issuppotted) {
+                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
+            } else {
+                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
+
+
+            }
+
+
             Toast.makeText(this, "من فضلك قم بتفعيل GPS لنتمكن من تحديد موقعك ", Toast.LENGTH_SHORT).show();
             return false;
         } else {
@@ -366,12 +414,12 @@ l=true;
 
     public void getdialogFragment(boolean b, String s, String s2) {
 
-        DialogFragmenttt dialogFragment = new DialogFragmenttt();
+        dialogFragment = new DialogFragmenttt();
         dialogFragment.show(getSupportFragmentManager(), null);
-        Bundle bundle = new Bundle();
         bundle.putString("user", s);
         bundle.putString("place", s2);
         bundle.putBoolean("Status", b);
+
 
         dialogFragment.setArguments(bundle);
         // dialogFragment.dismiss();
@@ -379,36 +427,23 @@ l=true;
 
     }
 
-    private void showGPSDisabledAlertToUser() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-        alertDialogBuilder.setMessage("GPS is disabled in your device. Would you like to enable it?")
-                .setCancelable(false)
-                .setPositiveButton("Goto Settings Page To Enable GPS",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                Intent callGPSSettingIntent = new Intent(
-                                        android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                                startActivity(callGPSSettingIntent);
-                            }
-                        });
-        alertDialogBuilder.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.cancel();
-                    }
-                });
-        AlertDialog alert = alertDialogBuilder.create();
-        alert.show();
-    }
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
+        String languageToLoad = "ar"; // your language
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
+
+
         mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
             @Override
             public void onCameraIdle() {
                 Geocoder geocoder = new Geocoder(MapsActivity.this);
                 cameraPosition = mMap.getCameraPosition();
+                String languageToLoad = "ar"; // your language
+                Locale locale = new Locale(languageToLoad);
+                Locale.setDefault(locale);
                 //    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraPosition.target,14));
                 List<Address> addressList = new ArrayList<>();
                 try {
@@ -421,17 +456,49 @@ l=true;
                     addressList.get(0).toString();
                     Log.i("PlaceInfo", addressList.toString());
                     latLng = new LatLng(address2.getLatitude(), address2.getLongitude());
-                    location_setting(cameraPosition.target.latitude, cameraPosition.target.longitude, address2.getFeatureName());
-                    txsearch.setText(address2.getFeatureName() + address2.getCountryName() + address2.getLocality());
+                    String addressTitle;
+
+                    if (address2.getSubLocality() != null) {
+                        addressTitle = address2.getSubLocality();
+                    } else {
+
+                        if (address2.getLocality() != null)
+
+                            addressTitle = address2.getLocality();
+
+                        else {
+                            String[] titel = address2.getAddressLine(0).split(",");
+                            if (titel.length > 1) {
+
+                                addressTitle = (address2.getAddressLine(0).split(","))[1];
+                            } else
+                                addressTitle = address2.getAddressLine(0);
+
+
+                        }
+
+                    }
+
+                    supportwdLocationDetails = new SupportwdLocationDetails(address2.getSubLocality(), address2.getAddressLine(0), false, cameraPosition.target.latitude, cameraPosition.target.longitude, 4, "other");
+                    bundle.putString("ll", supportwdLocationDetails.toString());
+                    supportwdLocationDetails.setAddressTitle(addressTitle);
+                    if (checkLocationSupport) {
+
+
+                    }
+                    location_setting(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                    txsearch.setText(address2.getAddressLine(0));
                     autocompleteFragment.setText("");
 
-                   // supportwdLocation3 = address2.getFeatureName() + address2.getCountryName() + address2.getLocality();
-                    country =  address2.getAddressLine(0);
+                    // supportwdLocation3 = address2.getFeatureName() + address2.getCountryName() + address2.getLocality();
+                    country = address2.getAddressLine(0);
 
                 }
 
             }
 
         });
+
+
     }
 }

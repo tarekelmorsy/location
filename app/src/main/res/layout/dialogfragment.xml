@@ -1,21 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ll"
-    android:layout_height="wrap_content">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
 
     <LinearLayout
-        android:background="@drawable/bgbottomsheet"
         android:id="@+id/oo"
-        android:layout_marginTop="540dp"
-        android:paddingTop="30dp"
         android:layout_width="414dp"
-        android:layout_height="205dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="696dp"
+        android:background="@drawable/bgbottomsheet"
         android:orientation="vertical"
-
-        android:pointerIcon="alias">
-
+        android:paddingTop="30dp"
+        android:pointerIcon="alias"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0">
 
 
         <TextView
@@ -34,42 +40,43 @@
         <TextView
             android:id="@+id/location"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:layout_margin="5dp"
+            android:fontFamily="@font/family_semi_round_medium"
             android:gravity="center"
             android:text="string/ttt"
             android:textColor="#5044B8"
-            android:fontFamily="@font/family_semi_round_medium"
 
             android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp">
+            android:layout_height="50dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="30dp">
 
 
             <Button
                 android:id="@+id/btsecondlocation"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 android:layout_marginLeft="40dp"
+                android:layout_weight="1"
                 android:background="@drawable/button2"
                 android:fontFamily="@font/family_semi_round_medium"
-                android:layout_weight="1"
 
                 android:text="string/button" />
 
             <Button
                 android:id="@+id/btgo"
-                android:background="@drawable/bgbuttonnext"
-                android:fontFamily="@font/family_semi_round_medium"
                 android:layout_width="150dp"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
                 android:layout_marginLeft="30dp"
                 android:layout_weight="1"
-                android:textColor="#ffffff"
-                android:text="string/button" />
+                android:background="@drawable/bgbuttonnext"
+                android:fontFamily="@font/family_semi_round_medium"
+                android:text="string/button"
+                android:textColor="#ffffff" />
         </LinearLayout>
 
 
@@ -80,8 +87,11 @@
         android:layout_width="66dp"
         android:layout_height="66dp"
         android:layout_gravity="center"
-        android:layout_marginTop="160dp"
 
+        android:layout_marginStart="172dp"
+        android:layout_marginBottom="168dp"
         android:padding="5dp"
-        android:src="@drawable/imagunsuccessful_foreground" />
-</FrameLayout>
+        android:src="@drawable/imagunsuccessful_foreground"
+        app:layout_constraintBottom_toBottomOf="@+id/oo"
+        app:layout_constraintStart_toStartOf="@+id/oo" />
+</androidx.constraintlayout.widget.ConstraintLayout>

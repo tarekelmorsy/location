@@ -2,9 +2,9 @@
     xmlns:aapt="http://schemas.android.com/aapt"
     android:width="26dp"
     android:height="35dp"
-    android:viewportWidth="35"
+    android:viewportWidth="26"
     android:viewportHeight="35">
-  <group android:translateX="4.5">
+  <group android:translateX="0">
     <path
         android:pathData="M12.927,0c7.263,0 13.073,5.785 13.073,12.872 0,7.52 -7.408,17.79 -13.073,22.128 -5.81,-5.062 -12.927,-14.029 -12.927,-22.128 0,-7.087 5.81,-12.872 12.927,-12.872zM13.427,8c3.08,0 5.573,2.347 5.573,5.427 0,3.08 -2.493,5.573 -5.573,5.573 -3.08,0 -5.427,-2.493 -5.427,-5.573 0,-3.08 2.347,-5.427 5.427,-5.427z"
         android:fillType="evenOdd">

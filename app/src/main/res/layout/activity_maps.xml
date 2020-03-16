@@ -13,6 +13,8 @@ android:id="@+id/llll"
         android:layout_height="match_parent"
         tools:context=".ui.MapsActivity" />
 
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -40,6 +42,8 @@ android:id="@+id/llll"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:background="@null"
+            android:fontFamily="@font/family_semi_round_light"
+            android:maxLines="1"
             android:foregroundGravity="center_vertical|center|center_horizontal"
             android:gravity="center|center_horizontal|center_vertical"
             android:imeOptions="actionSearch"
@@ -95,6 +99,8 @@ android:id="@+id/llll"
                 android:maxLines="1"
                 android:paddingStart="7dp"
                 android:paddingEnd="7dp"
+                android:fontFamily="@font/family_semi_round_medium"
+
                 android:textSize="14sp"
                 android:textColor="#ffffff"
                 android:textStyle="italic"
@@ -102,6 +108,7 @@ android:id="@+id/llll"
         </LinearLayout>
         <Button
             android:id="@+id/location"
+            android:fontFamily="@font/family_semi_round_medium"
 
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -124,6 +131,7 @@ android:id="@+id/llll"
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+
 
 
 </RelativeLayout>
