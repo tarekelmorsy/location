@@ -3,7 +3,7 @@ package com.example.gpslocation.data;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.gpslocation.model.ErrorResponse;
-import com.example.gpslocation.model.IsSupportwdLocation;
+import com.example.gpslocation.model.BasketLocation;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 
@@ -21,7 +21,7 @@ public class Repository {
     private MutableLiveData<SupportwdLocation> mutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<ErrorResponse> errorResponseMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<IsSupportwdLocation> isSupportwdLocationMutableLiveData=new MutableLiveData<>();
+    private MutableLiveData<BasketLocation> basketMutableLiveData =new MutableLiveData<>();
 
     private static Repository INSTANCE;
     private static Repository INSTANCEDetail;
@@ -65,14 +65,19 @@ public class Repository {
         return mutableLiveData;
     }
 
-    public MutableLiveData <IsSupportwdLocation> isSupportwdLocationMutableLiveData (){
-        return isSupportwdLocationMutableLiveData;
+    public MutableLiveData <BasketLocation> basketMutableLiveData(){
+        return basketMutableLiveData;
     }
 
     public MutableLiveData <ErrorResponse> getMutableLiveDataeror(){
 
         return errorResponseMutableLiveData;
     }
+
+    /**
+     * get basket detail  from Support Location
+     * @param supportwdLocationDetails
+     */
     public void fetchTransactiondetail(SupportwdLocationDetails supportwdLocationDetails ){
 
 
@@ -80,15 +85,15 @@ public class Repository {
         Observable observable= apiInterface.fetchSupportwdLocationDetail( supportwdLocationDetails )
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
-        Observer<IsSupportwdLocation> locationObserver= new Observer<IsSupportwdLocation>() {
+        Observer<BasketLocation> locationObserver= new Observer<BasketLocation>() {
             @Override
             public void onSubscribe(Disposable d) {
 
             }
 
             @Override
-            public void onNext(IsSupportwdLocation isSupportwdLocation) {
-                isSupportwdLocationMutableLiveData.setValue(isSupportwdLocation);
+            public void onNext(BasketLocation isSupportwdLocation) {
+                basketMutableLiveData.setValue(isSupportwdLocation);
               //  Log.d("lllll",isSupportwdLocation.getMessage());
 
 
@@ -108,7 +113,11 @@ public class Repository {
 
     }
 
-
+    /**
+     * get Date from Support Location
+     * @param lat
+     * @param lon
+     */
     public void getData(final Double lat, Double lon) {
         Observable observable = apiInterface.gitSuccessful(lat, lon)
                 .subscribeOn(Schedulers.io())
@@ -130,7 +139,10 @@ public class Repository {
 
                 };
 
-
+            /**
+             * get date  from Not supported location
+             * @param e
+             */
             @Override
             public void onError(Throwable e) {
                 if (e instanceof RetrofitException) {

@@ -18,7 +18,7 @@ import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
 
 import com.example.gpslocation.R;
-import com.example.gpslocation.model.IsSupportwdLocation;
+import com.example.gpslocation.model.BasketLocation;
 
 public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
@@ -28,6 +28,7 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
      ConstraintLayout frameLayout;
     SharedPreferences sharedpreferences;
     public static final String MyPREFERENCES = "MyPrefs" ;
+    ViewModell viewModell =  new ViewModell();
 
 
     @Nullable
@@ -46,10 +47,6 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
         button1 = view.findViewById(R.id.btsecondlocation);
         button2 = view.findViewById(R.id.btgo);
-       // button2.setOnClickListener(v -> {
-           // Intent intent = new Intent(getContext(),Phone.class);
-            //startActivity(intent);
-      //  });
         button1.setOnClickListener(v -> dismiss());
         frameLayout = view.findViewById(R.id.ll);
         textView1 = view.findViewById(R.id.txissuccessful);
@@ -65,64 +62,69 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
 
             textView2.setText(bundle.getString("user"));
-            textView1.setText(bundle.getString("place"));
+            viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                  //  textView1.setText(s);
+                    textView2.setText(s);
+
+                }
+            });
+         //   textView1.setText(bundle.getString("place"));
             imageView.setImageResource(R.drawable.imagsuccessful_foreground);
             button1.setText("لا موقع ثاني");
             button2.setText("يلا سارينا");
 
 
-            button2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                  //  Log.d("ooooo",bundle.getString("userr"));
-                  //  MapsActivity.checkLocationSupport=true;
-
-                    ViewModell viewModell= new ViewModell();
-                    viewModell.getDetail(MapsActivity.supportwdLocationDetails);
-                    viewModell.getIsSupportwdLocationMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<IsSupportwdLocation>() {
-                        @Override
-                        public void onChanged(IsSupportwdLocation isSupportwdLocation) {
-                           // Log.d("pppppppp",isSupportwdLocation.getMessage());
-                           // Log.d("ll;;;",isSupportwdLocation.toString());
-                            Bundle bundle1 = new Bundle();
-                            bundle1.putBundle("ppp",bundle1);
-                            bundle1.putString("userr", isSupportwdLocation.getMessage());
+            button2.setOnClickListener(v -> {
+              //  Log.d("ooooo" , bundle.getString("userr"));
+              //  MapsActivity.checkLocationSupport=true;
+              viewModell.getDetail(MapsActivity.getSupportwdLocationDetails() );
+               viewModell.getDetail(viewModell.getbasketMutableLiveData());
+            //    Log.d("pppppppp",viewModell.getbasketMutableLiveData().getDefault().toString());
+                viewModell.getBasketMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<BasketLocation>() {
+                    @Override
+                    public void onChanged(BasketLocation basketLocation) {
+                       // Log.d("pppppppp",isSupportwdLocation.getMessage());
+                       // Log.d("ll;;;",isSupportwdLocation.toString());
 
 
 
-                        }
-                    });
+                    }
+                });
 
-                   // MapsActivity.getSupportedLocationDetails(MapsActivity.supportwdLocationDetails);
-                  //  Intent intent = new Intent(getContext(),Phone.class);
-                    //startActivity(intent);
+               // MapsActivity.getSupportedLocationDetails(MapsActivity.supportwdLocationDetails);
+              //  Intent intent = new Intent(getContext(),Phone.class);
+                //startActivity(intent);
 
-                    /*
-                    MapsActivity.checkLocationSupport=true;
-
-
-                    MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<IsSupportwdLocation>() {
-                        @Override
-                        public void onChanged(IsSupportwdLocation isSupportwdLocation) {
+                /*
+                MapsActivity.checkLocationSupport=true;
 
 
-                            Log.d("pppppppp",isSupportwdLocation.getMessage());
-
-                        }
-                    });
-                    Intent intent = new Intent(getContext(),Phone.class);
-                    startActivity(intent);
+                MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<IsSupportwdLocation>() {
+                    @Override
+                    public void onChanged(IsSupportwdLocation isSupportwdLocation) {
 
 
+                        Log.d("pppppppp",isSupportwdLocation.getMessage());
 
-                }*/
-                }  });
+                    }
+                });
+                Intent intent = new Intent(getContext(),Phone.class);
+                startActivity(intent);
+
+
+
+            }*/
+            });
 
 
         } else {
 
             textView2.setText(bundle.getString("user"));
-            textView1.setText(bundle.getString("place"));
+            textView1.setText(viewModell.getString().getValue());
+
+           // textView1.setText(bundle.getString("place"));
             imageView.setImageResource(R.drawable.imagunsuccessful_foreground);
             button1.setText("غير موقعك");
             button2.setText("عرفنا عليك");

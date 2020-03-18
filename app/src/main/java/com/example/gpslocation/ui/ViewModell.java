@@ -5,18 +5,39 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.gpslocation.data.Repository;
 import com.example.gpslocation.model.ErrorResponse;
-import com.example.gpslocation.model.IsSupportwdLocation;
+import com.example.gpslocation.model.BasketLocation;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 
 
 public class ViewModell extends ViewModel {
+    private MutableLiveData<SupportwdLocationDetails> basketMutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<String> string = new MutableLiveData<>();
 
 
 
+public void setString(String stringd) {
+        this.string.setValue( stringd );
+    }
+
+    public MutableLiveData<String> getString() {
+        return string;
+    }
+    //  public String getString() {
+        //return string.getValue();
+   // }
 
     private Repository repository;
 
+
+
+    public void setBasketMutableLiveData( SupportwdLocationDetails basketMutableLiveDatae) {
+
+        basketMutableLiveData.setValue(basketMutableLiveDatae);
+    }
+    public SupportwdLocationDetails getbasketMutableLiveData(){
+        return basketMutableLiveData.getValue();
+    }
 
     public ViewModell (){
         repository = Repository.getINSTANCEe();
@@ -42,9 +63,9 @@ public class ViewModell extends ViewModel {
     public MutableLiveData <ErrorResponse> getMutableLiveDataError(){
         return repository.getMutableLiveDataeror();
     }
-    public MutableLiveData<IsSupportwdLocation> getIsSupportwdLocationMutableLiveData(){
+    public MutableLiveData<BasketLocation> getBasketMutableLiveData(){
 
-        return repository.isSupportwdLocationMutableLiveData();
+        return repository.basketMutableLiveData();
     }
 
 

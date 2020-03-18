@@ -1,6 +1,6 @@
 package com.example.gpslocation.data;
 
-import com.example.gpslocation.model.IsSupportwdLocation;
+import com.example.gpslocation.model.BasketLocation;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 
@@ -24,7 +24,7 @@ public interface ApiInterface {
             "device-type: android"
     })
     @POST("baskets/")
-    public Observable<IsSupportwdLocation> fetchSupportwdLocationDetail(@Body SupportwdLocationDetails supportwdLocationDetails);
+    public Observable<BasketLocation> fetchSupportwdLocationDetail(@Body SupportwdLocationDetails supportwdLocationDetails);
 
 
 

@@ -4,7 +4,7 @@ package com.example.gpslocation.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class IsSupportwdLocation {
+public class BasketLocation {
 
     @SerializedName("result")
     @Expose

@@ -21,8 +21,8 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gpslocation.R;
+import com.example.gpslocation.model.BasketLocation;
 import com.example.gpslocation.model.ErrorResponse;
-import com.example.gpslocation.model.IsSupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 import com.google.android.gms.common.api.Status;
@@ -69,6 +69,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean mPremissionGranted = false;
     boolean mGpsEnabled = false;
     private View mapView;
+
+
     String supportwdLocation1, country;
     boolean issuppotted = false;
     boolean gg = false;
@@ -78,6 +80,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public static boolean checkLocationSupport = false;
     DialogFragmenttt dialogFragment;
     Bundle bundle = new Bundle();
+
+
+
     static SupportwdLocationDetails supportwdLocationDetails = null;
 
     static  String MODE_PRIVATE="lll";
@@ -86,7 +91,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Permission();
         iGps = (ImageView) findViewById(R.id.ic_gps);
         txsearch = findViewById(R.id.input_search);
         txsuccessful = findViewById(R.id.txSuccessful);
@@ -323,17 +327,17 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public String lll() {
         //Bundle bundle = new Bundle();
         MapsActivity.checkLocationSupport = true;
-        final IsSupportwdLocation[] isSupportwdLocationn = {new IsSupportwdLocation()};
+        final BasketLocation[] basketLocationn = {new BasketLocation()};
 
-        MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe(MapsActivity.this, new Observer<IsSupportwdLocation>() {
+        MapsActivity.viewModell.getBasketMutableLiveData().observe(MapsActivity.this, new Observer<BasketLocation>() {
             @Override
-            public void onChanged(IsSupportwdLocation isSupportwdLocation) {
+            public void onChanged(BasketLocation basketLocation) {
 
 
-                bundle.putString("userr", isSupportwdLocation.toString());
+                bundle.putString("userr", basketLocation.toString());
 
-                isSupportwdLocationn[0] = isSupportwdLocation;
-                Log.d("pppppppp", isSupportwdLocation.getMessage());
+                basketLocationn[0] = basketLocation;
+                Log.d("pppppppp", basketLocation.getMessage());
 
             }
         });
@@ -378,11 +382,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public static void getSupportedLocationDetails(SupportwdLocationDetails supportwdLocationDetails) {
-        viewModell.getDetail(supportwdLocationDetails);
-
-    }
-
     public boolean checkPermission() {
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -416,7 +415,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         dialogFragment = new DialogFragmenttt();
         dialogFragment.show(getSupportFragmentManager(), null);
-        bundle.putString("user", s);
+       // bundle.putString("user", s);
+        //viewModell.setString(s2);
+
+        viewModell.setString(s);
         bundle.putString("place", s2);
         bundle.putBoolean("Status", b);
 
@@ -480,8 +482,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }
 
                     supportwdLocationDetails = new SupportwdLocationDetails(address2.getSubLocality(), address2.getAddressLine(0), false, cameraPosition.target.latitude, cameraPosition.target.longitude, 4, "other");
-                    bundle.putString("ll", supportwdLocationDetails.toString());
+
+                   // viewModell.setBasketMutableLiveData(supportwdLocationDetails);
+
+
                     supportwdLocationDetails.setAddressTitle(addressTitle);
+                    bundle.putString("ll", supportwdLocationDetails.toString());
                     if (checkLocationSupport) {
 
 
@@ -494,11 +500,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     country = address2.getAddressLine(0);
 
                 }
+                viewModell.setBasketMutableLiveData(supportwdLocationDetails);
+
 
             }
 
         });
 
 
+
     }
+    public static SupportwdLocationDetails getSupportwdLocationDetails() {
+        return supportwdLocationDetails;
+    }
+
+    public static void setSupportwdLocationDetails(SupportwdLocationDetails supportwdLocationDetails) {
+        MapsActivity.supportwdLocationDetails = supportwdLocationDetails;
+    }
+
+
 }
