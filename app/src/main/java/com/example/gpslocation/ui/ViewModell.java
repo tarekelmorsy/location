@@ -12,9 +12,9 @@ import com.example.gpslocation.model.SupportwdLocationDetails;
 
 public class ViewModell extends ViewModel {
     private MutableLiveData<SupportwdLocationDetails> basketMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> string = new MutableLiveData<>();
-    private MutableLiveData<String> string2 = new MutableLiveData<>();
-    private MutableLiveData<Boolean> isSuppotted = new MutableLiveData<>();
+    private MutableLiveData<String> country = new MutableLiveData<>();
+    private MutableLiveData<String> supported = new MutableLiveData<>();
+    private MutableLiveData<Boolean> booleanIsSupported = new MutableLiveData<>();
     private MutableLiveData<SupportwdLocationDetails> supportwdLocationDetailsMutableLiveData =new MutableLiveData<>();
 
 
@@ -30,38 +30,34 @@ public class ViewModell extends ViewModel {
 
 
     public void setBoolean(boolean b ) {
-        this.isSuppotted.setValue( b);
+        this.booleanIsSupported.setValue( b);
     }
 
     public MutableLiveData<Boolean> getBoolean() {
-        return isSuppotted;
+        return booleanIsSupported;
     }
 
 
-    public void setString(String stringd) {
-        this.string.setValue( stringd );
+    public void setCountry(String stringd) {
+        this.country.setValue( stringd );
     }
 
-    public MutableLiveData<String> getString() {
-        return string;
+    public MutableLiveData<String> getCountry() {
+        return country;
     }
 
-    public void setString2(String stringd) {
-        this.string2.setValue( stringd );
+    public void setSupported(String stringd) {
+        this.supported.setValue( stringd );
     }
 
-    public MutableLiveData<String> getString2() {
-        return string2;
+    public MutableLiveData<String> getSupported() {
+        return supported;
     }
 
     private Repository repository;
 
 
 
-    public void setBasketMutableLiveData( SupportwdLocationDetails basketMutableLiveDatae) {
-
-        basketMutableLiveData.setValue(basketMutableLiveDatae);
-    }
     public SupportwdLocationDetails getbasketMutableLiveData(){
         return basketMutableLiveData.getValue();
     }

@@ -16,15 +16,15 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gpslocation.R;
 import com.example.gpslocation.model.BasketLocation;
 
 public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
-    Button button1, button2;
-    TextView textView1, textView2;
+    Button again, btGo;
+    TextView tvSupported, tvCountry;
     ImageView imageView;
      ConstraintLayout frameLayout;
     SharedPreferences sharedpreferences;
@@ -33,7 +33,9 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-        viewModell= ViewModelProviders.of(getActivity()).get(ViewModell.class);
+       // viewModell= ViewModelProviders.of(getActivity()).get(ViewModell.class);
+        viewModell = new ViewModelProvider(getActivity()).get(ViewModell.class);
+
         super.onCreate(savedInstanceState);
        // viewModell = new ViewModelProvider(this).get(ViewModell.class);
 
@@ -53,12 +55,12 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        button1 = view.findViewById(R.id.btsecondlocation);
-        button2 = view.findViewById(R.id.btgo);
-        button1.setOnClickListener(v -> dismiss());
+        again = view.findViewById(R.id.btsecondlocation);
+        btGo = view.findViewById(R.id.btgo);
+        again.setOnClickListener(v -> dismiss());
         frameLayout = view.findViewById(R.id.ll);
-        textView1 = view.findViewById(R.id.txissuccessful);
-        textView2 = view.findViewById(R.id.location);
+        tvSupported = view.findViewById(R.id.txissuccessful);
+        tvCountry = view.findViewById(R.id.location);
         imageView = view.findViewById(R.id.igIcon);
         frameLayout.setOnClickListener(v -> dismiss());
 
@@ -69,27 +71,19 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
         if (viewModell.getBoolean().getValue()) {
 
              // textView1.setText(bundle.getString("place"));
-            textView1.setText(viewModell.getString2().getValue());
-
+            tvSupported.setText(viewModell.getSupported().getValue());
+            tvCountry.setText( viewModell.getCountry().getValue());
 
           //  textView2.setText(bundle.getString("user"));
 
-            viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                   // s="llll";
-                   textView2.setText(s);
-                  //  textView2.setText(s);
 
-                }
-            });
          //   textView1.setText(bundle.getString("place"));
             imageView.setImageResource(R.drawable.imagsuccessful_foreground);
-            button1.setText("لا موقع ثاني");
-            button2.setText("يلا سارينا");
+            again.setText("لا موقع ثاني");
+            btGo.setText("يلا سارينا");
 
 
-            button2.setOnClickListener(v -> {
+            btGo.setOnClickListener(v -> {
               //  Log.d("ooooo" , bundle.getString("userr"));
               //  MapsActivity.checkLocationSupport=true;
               viewModell.getDetail(viewModell.getSupportwdLocationDetails().getValue());
@@ -106,29 +100,9 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
                     }
                 });
 
-               // MapsActivity.getSupportedLocationDetails(MapsActivity.supportwdLocationDetails);
-              //  Intent intent = new Intent(getContext(),Phone.class);
-                //startActivity(intent);
-
-                /*
-                MapsActivity.checkLocationSupport=true;
-
-
-                MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<IsSupportwdLocation>() {
-                    @Override
-                    public void onChanged(IsSupportwdLocation isSupportwdLocation) {
-
-
-                        Log.d("pppppppp",isSupportwdLocation.getMessage());
-
-                    }
-                });
-                Intent intent = new Intent(getContext(),Phone.class);
-                startActivity(intent);
 
 
 
-            }*/
             });
 
 
@@ -137,18 +111,14 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
            // textView2.setText(bundle.getString("user"));
            // textView1.setText(viewModell.getString().getValue());
 
-            textView1.setText(viewModell.getString2().getValue());
+            tvSupported.setText(viewModell.getSupported().getValue());
             imageView.setImageResource(R.drawable.imagunsuccessful_foreground);
-            button1.setText("غير موقعك");
-            button2.setText("عرفنا عليك");
+            again.setText("غير موقعك");
+            btGo.setText("عرفنا عليك");
 
-            viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                    textView2.setText(s);
-                }
-            });
-            button2.setOnClickListener(new View.OnClickListener() {
+            tvCountry.setText( viewModell.getCountry().getValue());
+
+            btGo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

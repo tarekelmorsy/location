@@ -418,8 +418,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
       //  bundle.putString("user", s);
         //viewModell.setString(s2);
 
-        viewModell.setString(s);
-        viewModell.setString2(s2);
+        viewModell.setCountry(s);
+        viewModell.setSupported(s2);
         viewModell.setBoolean(b);
 
 
