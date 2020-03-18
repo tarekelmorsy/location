@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.LifecycleOwner;
 import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.example.gpslocation.R;
 import com.example.gpslocation.model.BasketLocation;
@@ -30,6 +31,13 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
     public static final String MyPREFERENCES = "MyPrefs" ;
     ViewModell viewModell =  new ViewModell();
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        viewModell= ViewModelProviders.of(getActivity()).get(ViewModell.class);
+        super.onCreate(savedInstanceState);
+       // viewModell = new ViewModelProvider(this).get(ViewModell.class);
+
+    }
 
     @Nullable
 
@@ -58,15 +66,20 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
 
         Bundle bundle = getArguments();
-        if (bundle.getBoolean("Status") == true) {
+        if (viewModell.getBoolean().getValue()) {
+
+             // textView1.setText(bundle.getString("place"));
+            textView1.setText(viewModell.getString2().getValue());
 
 
-            textView2.setText(bundle.getString("user"));
+          //  textView2.setText(bundle.getString("user"));
+
             viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
                 @Override
                 public void onChanged(String s) {
-                  //  textView1.setText(s);
-                    textView2.setText(s);
+                   // s="llll";
+                   textView2.setText(s);
+                  //  textView2.setText(s);
 
                 }
             });
@@ -79,7 +92,7 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
             button2.setOnClickListener(v -> {
               //  Log.d("ooooo" , bundle.getString("userr"));
               //  MapsActivity.checkLocationSupport=true;
-              viewModell.getDetail(MapsActivity.getSupportwdLocationDetails() );
+              viewModell.getDetail(viewModell.getSupportwdLocationDetails().getValue());
                viewModell.getDetail(viewModell.getbasketMutableLiveData());
             //    Log.d("pppppppp",viewModell.getbasketMutableLiveData().getDefault().toString());
                 viewModell.getBasketMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<BasketLocation>() {
@@ -121,13 +134,20 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
         } else {
 
-            textView2.setText(bundle.getString("user"));
-            textView1.setText(viewModell.getString().getValue());
+           // textView2.setText(bundle.getString("user"));
+           // textView1.setText(viewModell.getString().getValue());
 
-           // textView1.setText(bundle.getString("place"));
+            textView1.setText(viewModell.getString2().getValue());
             imageView.setImageResource(R.drawable.imagunsuccessful_foreground);
             button1.setText("غير موقعك");
             button2.setText("عرفنا عليك");
+
+            viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
+                @Override
+                public void onChanged(String s) {
+                    textView2.setText(s);
+                }
+            });
             button2.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -13,19 +13,46 @@ import com.example.gpslocation.model.SupportwdLocationDetails;
 public class ViewModell extends ViewModel {
     private MutableLiveData<SupportwdLocationDetails> basketMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<String> string = new MutableLiveData<>();
+    private MutableLiveData<String> string2 = new MutableLiveData<>();
+    private MutableLiveData<Boolean> isSuppotted = new MutableLiveData<>();
+    private MutableLiveData<SupportwdLocationDetails> supportwdLocationDetailsMutableLiveData =new MutableLiveData<>();
 
 
 
-public void setString(String stringd) {
+
+    public void setSupportwdLocationDetails(SupportwdLocationDetails supportwdLocationDetails ) {
+        this.supportwdLocationDetailsMutableLiveData.setValue( supportwdLocationDetails);
+    }
+
+    public MutableLiveData<SupportwdLocationDetails> getSupportwdLocationDetails() {
+        return supportwdLocationDetailsMutableLiveData;
+    }
+
+
+    public void setBoolean(boolean b ) {
+        this.isSuppotted.setValue( b);
+    }
+
+    public MutableLiveData<Boolean> getBoolean() {
+        return isSuppotted;
+    }
+
+
+    public void setString(String stringd) {
         this.string.setValue( stringd );
     }
 
     public MutableLiveData<String> getString() {
         return string;
     }
-    //  public String getString() {
-        //return string.getValue();
-   // }
+
+    public void setString2(String stringd) {
+        this.string2.setValue( stringd );
+    }
+
+    public MutableLiveData<String> getString2() {
+        return string2;
+    }
 
     private Repository repository;
 

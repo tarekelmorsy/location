@@ -83,7 +83,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-    static SupportwdLocationDetails supportwdLocationDetails = null;
+    private SupportwdLocationDetails supportwdLocationDetails = null;
 
     static  String MODE_PRIVATE="lll";
 
@@ -415,12 +415,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         dialogFragment = new DialogFragmenttt();
         dialogFragment.show(getSupportFragmentManager(), null);
-       // bundle.putString("user", s);
+      //  bundle.putString("user", s);
         //viewModell.setString(s2);
 
         viewModell.setString(s);
-        bundle.putString("place", s2);
-        bundle.putBoolean("Status", b);
+        viewModell.setString2(s2);
+        viewModell.setBoolean(b);
+
+
+        // bundle.putString("place", s2);
+      //  bundle.putBoolean("Status", b);
 
 
         dialogFragment.setArguments(bundle);
@@ -500,7 +504,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     country = address2.getAddressLine(0);
 
                 }
-                viewModell.setBasketMutableLiveData(supportwdLocationDetails);
+                viewModell.setSupportwdLocationDetails(supportwdLocationDetails);
 
 
             }
@@ -510,13 +514,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
-    public static SupportwdLocationDetails getSupportwdLocationDetails() {
-        return supportwdLocationDetails;
-    }
 
-    public static void setSupportwdLocationDetails(SupportwdLocationDetails supportwdLocationDetails) {
-        MapsActivity.supportwdLocationDetails = supportwdLocationDetails;
-    }
 
 
 }
