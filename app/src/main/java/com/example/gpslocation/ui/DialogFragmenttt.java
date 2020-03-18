@@ -22,8 +22,8 @@ import com.example.gpslocation.model.BasketLocation;
 
 public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
-    Button button1, button2;
-    TextView textView1, textView2;
+    Button again, btGo;
+    TextView tvSupported, tvCountry;
     ImageView imageView;
      ConstraintLayout frameLayout;
     SharedPreferences sharedpreferences;
@@ -45,12 +45,12 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         getDialog().getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        button1 = view.findViewById(R.id.btsecondlocation);
-        button2 = view.findViewById(R.id.btgo);
-        button1.setOnClickListener(v -> dismiss());
+        again = view.findViewById(R.id.btsecondlocation);
+        btGo = view.findViewById(R.id.btgo);
+        again.setOnClickListener(v -> dismiss());
         frameLayout = view.findViewById(R.id.ll);
-        textView1 = view.findViewById(R.id.txissuccessful);
-        textView2 = view.findViewById(R.id.location);
+        tvSupported = view.findViewById(R.id.txissuccessful);
+        tvCountry = view.findViewById(R.id.location);
         imageView = view.findViewById(R.id.igIcon);
         frameLayout.setOnClickListener(v -> dismiss());
 
@@ -61,22 +61,15 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
         if (bundle.getBoolean("Status") == true) {
 
 
-            textView2.setText(bundle.getString("user"));
-            viewModell.getString().observe((LifecycleOwner) getContext(), new Observer<String>() {
-                @Override
-                public void onChanged(String s) {
-                  //  textView1.setText(s);
-                    textView2.setText(s);
+            tvCountry.setText(bundle.getString("country"));
 
-                }
-            });
-         //   textView1.setText(bundle.getString("place"));
+            tvSupported.setText(bundle.getString("supported"));
             imageView.setImageResource(R.drawable.imagsuccessful_foreground);
-            button1.setText("لا موقع ثاني");
-            button2.setText("يلا سارينا");
+            again.setText("لا موقع ثاني");
+            btGo.setText("يلا سارينا");
 
 
-            button2.setOnClickListener(v -> {
+            btGo.setOnClickListener(v -> {
               //  Log.d("ooooo" , bundle.getString("userr"));
               //  MapsActivity.checkLocationSupport=true;
               viewModell.getDetail(MapsActivity.getSupportwdLocationDetails() );
@@ -93,42 +86,19 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
                     }
                 });
 
-               // MapsActivity.getSupportedLocationDetails(MapsActivity.supportwdLocationDetails);
-              //  Intent intent = new Intent(getContext(),Phone.class);
-                //startActivity(intent);
 
-                /*
-                MapsActivity.checkLocationSupport=true;
-
-
-                MapsActivity.viewModell.getIsSupportwdLocationMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<IsSupportwdLocation>() {
-                    @Override
-                    public void onChanged(IsSupportwdLocation isSupportwdLocation) {
-
-
-                        Log.d("pppppppp",isSupportwdLocation.getMessage());
-
-                    }
-                });
-                Intent intent = new Intent(getContext(),Phone.class);
-                startActivity(intent);
-
-
-
-            }*/
             });
 
 
         } else {
 
-            textView2.setText(bundle.getString("user"));
-            textView1.setText(viewModell.getString().getValue());
+            tvCountry.setText(bundle.getString("country"));
 
-           // textView1.setText(bundle.getString("place"));
+           tvSupported.setText(bundle.getString("supported"));
             imageView.setImageResource(R.drawable.imagunsuccessful_foreground);
-            button1.setText("غير موقعك");
-            button2.setText("عرفنا عليك");
-            button2.setOnClickListener(new View.OnClickListener() {
+            again.setText("غير موقعك");
+            btGo.setText("عرفنا عليك");
+            btGo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 

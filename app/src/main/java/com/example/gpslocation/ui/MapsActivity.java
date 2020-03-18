@@ -415,11 +415,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         dialogFragment = new DialogFragmenttt();
         dialogFragment.show(getSupportFragmentManager(), null);
-       // bundle.putString("user", s);
+        bundle.putString("country", s);
         //viewModell.setString(s2);
 
-        viewModell.setString(s);
-        bundle.putString("place", s2);
+        bundle.putString("supported", s2);
         bundle.putBoolean("Status", b);
 
 

@@ -12,20 +12,7 @@ import com.example.gpslocation.model.SupportwdLocationDetails;
 
 public class ViewModell extends ViewModel {
     private MutableLiveData<SupportwdLocationDetails> basketMutableLiveData = new MutableLiveData<>();
-    private MutableLiveData<String> string = new MutableLiveData<>();
 
-
-
-public void setString(String stringd) {
-        this.string.setValue( stringd );
-    }
-
-    public MutableLiveData<String> getString() {
-        return string;
-    }
-    //  public String getString() {
-        //return string.getValue();
-   // }
 
     private Repository repository;
 
