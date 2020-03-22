@@ -31,13 +31,17 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
     public static final String MyPREFERENCES = "MyPrefs" ;
     ViewModell viewModell =  new ViewModell();
 
+
+    @Nullable
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
-       // viewModell= ViewModelProviders.of(getActivity()).get(ViewModell.class);
+        // viewModell= ViewModelProviders.of(getActivity()).get(ViewModell.class);
         viewModell = new ViewModelProvider(getActivity()).get(ViewModell.class);
 
         super.onCreate(savedInstanceState);
-       // viewModell = new ViewModelProvider(this).get(ViewModell.class);
+        // viewModell = new ViewModelProvider(this).get(ViewModell.class);
 
     }
 
@@ -70,30 +74,29 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
         Bundle bundle = getArguments();
         if (viewModell.getBoolean().getValue()) {
 
-             // textView1.setText(bundle.getString("place"));
+            // textView1.setText(bundle.getString("place"));
             tvSupported.setText(viewModell.getSupported().getValue());
             tvCountry.setText( viewModell.getCountry().getValue());
 
-          //  textView2.setText(bundle.getString("user"));
+            //  textView2.setText(bundle.getString("user"));
 
 
-         //   textView1.setText(bundle.getString("place"));
+            //   textView1.setText(bundle.getString("place"));
             imageView.setImageResource(R.drawable.imagsuccessful_foreground);
             again.setText("لا موقع ثاني");
             btGo.setText("يلا سارينا");
 
 
             btGo.setOnClickListener(v -> {
-              //  Log.d("ooooo" , bundle.getString("userr"));
-              //  MapsActivity.checkLocationSupport=true;
-              viewModell.getDetail(viewModell.getSupportwdLocationDetails().getValue());
-               viewModell.getDetail(viewModell.getbasketMutableLiveData());
-            //    Log.d("pppppppp",viewModell.getbasketMutableLiveData().getDefault().toString());
+                //  Log.d("ooooo" , bundle.getString("userr"));
+                //  MapsActivity.checkLocationSupport=true;
+                viewModell.getDetail(viewModell.getSupportwdLocationDetails().getValue());
+                //    Log.d("pppppppp",viewModell.getbasketMutableLiveData().getDefault().toString());
                 viewModell.getBasketMutableLiveData().observe((LifecycleOwner) getContext(), new Observer<BasketLocation>() {
                     @Override
                     public void onChanged(BasketLocation basketLocation) {
-                       // Log.d("pppppppp",isSupportwdLocation.getMessage());
-                       // Log.d("ll;;;",isSupportwdLocation.toString());
+                        // Log.d("pppppppp",isSupportwdLocation.getMessage());
+                        // Log.d("ll;;;",isSupportwdLocation.toString());
 
 
 
@@ -108,8 +111,8 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
 
         } else {
 
-           // textView2.setText(bundle.getString("user"));
-           // textView1.setText(viewModell.getString().getValue());
+            // textView2.setText(bundle.getString("user"));
+            // textView1.setText(viewModell.getString().getValue());
 
             tvSupported.setText(viewModell.getSupported().getValue());
             imageView.setImageResource(R.drawable.imagunsuccessful_foreground);
@@ -142,7 +145,6 @@ public class DialogFragmenttt extends androidx.fragment.app.DialogFragment {
             @Override
             public void onChanged(IsSupportwdLocation isSupportwdLocation) {
                 Log.d("pppppppp",isSupportwdLocation.getMessage());
-
             }
         });
 */

@@ -21,7 +21,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.gpslocation.R;
-import com.example.gpslocation.model.BasketLocation;
 import com.example.gpslocation.model.ErrorResponse;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
@@ -141,6 +140,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
+    /**
+     * Search for places on the map
+     */
+
     public void setPlacee() {
         final String TAG = "placeautocomplete";
         Places.initialize(getApplicationContext(), "AIzaSyDZBBzdhWw64zTG3F-sHCyrsdMTL_zvtXE");
@@ -204,6 +207,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    /**
+     * get user Location
+     *
+     */
     public void getDeviceLocation() {
         mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
         try {
@@ -264,6 +271,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+    /**
+     * Check the location's permission to the user
+     * @return
+     */
     public void Permission() {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
@@ -324,26 +335,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 .check();
     }
 
-    public String lll() {
-        //Bundle bundle = new Bundle();
-        MapsActivity.checkLocationSupport = true;
-        final BasketLocation[] basketLocationn = {new BasketLocation()};
 
-        MapsActivity.viewModell.getBasketMutableLiveData().observe(MapsActivity.this, new Observer<BasketLocation>() {
-            @Override
-            public void onChanged(BasketLocation basketLocation) {
-
-
-                bundle.putString("userr", basketLocation.toString());
-
-                basketLocationn[0] = basketLocation;
-                Log.d("pppppppp", basketLocation.getMessage());
-
-            }
-        });
-
-        return (bundle.getString("userr"));
-    }
+    /**
+     * setupobserve from view model
+     */
 
     public void setupobserve() {
         viewModell = new ViewModelProvider(this).get(ViewModell.class);
@@ -376,6 +371,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         });
     }
 
+
+    /**
+     * get location cameraPosition
+     * @param lat
+     * @param lan
+     */
     public void location_setting(double lat, double lan) {
         viewModell.getretrofit(lat, lan);
         // viewModell.getDetail(supportwdLocationDetails);
@@ -411,6 +412,13 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+    /**
+     * Show the dialog fragment supported
+     * @param b
+     * @param s
+     * @param s2
+     */
     public void getdialogFragment(boolean b, String s, String s2) {
 
         dialogFragment = new DialogFragmenttt();
