@@ -10,10 +10,8 @@ import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 
 
-public class ViewModell extends ViewModel {
-    private MutableLiveData<SupportwdLocationDetails> basketMutableLiveData = new MutableLiveData<>();
+public class ViewModellIsSupportedLocation extends ViewModel {
     private MutableLiveData<String> country = new MutableLiveData<>();
-    private MutableLiveData<String> supported = new MutableLiveData<>();
     private MutableLiveData<Boolean> booleanIsSupported = new MutableLiveData<>();
     private MutableLiveData<SupportwdLocationDetails> supportwdLocationDetailsMutableLiveData =new MutableLiveData<>();
 
@@ -29,40 +27,28 @@ public class ViewModell extends ViewModel {
     }
 
 
-    public void setBoolean(boolean b ) {
-        this.booleanIsSupported.setValue( b);
+    public void setIsSupported(boolean isSupported ) {
+        this.booleanIsSupported.setValue( isSupported);
     }
 
-    public MutableLiveData<Boolean> getBoolean() {
+    public MutableLiveData<Boolean> getIsSupported() {
         return booleanIsSupported;
     }
 
 
-    public void setCountry(String stringd) {
-        this.country.setValue( stringd );
+    public void setCountry(String country) {
+        this.country.setValue( country );
     }
 
     public MutableLiveData<String> getCountry() {
         return country;
     }
 
-    public void setSupported(String stringd) {
-        this.supported.setValue( stringd );
-    }
-
-    public MutableLiveData<String> getSupported() {
-        return supported;
-    }
-
     private Repository repository;
 
 
 
-    public SupportwdLocationDetails getbasketMutableLiveData(){
-        return basketMutableLiveData.getValue();
-    }
-
-    public ViewModell (){
+    public ViewModellIsSupportedLocation(){
         repository = Repository.getINSTANCEe();
         repository =Repository.getINSTANCEDetail();
 

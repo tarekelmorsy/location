@@ -3,9 +3,7 @@ import android.Manifest;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationListener;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -38,7 +35,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.gun0912.tedpermission.PermissionListener;
@@ -54,37 +50,33 @@ import java.util.Locale;
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
     private GoogleMap mMap;
     FusedLocationProviderClient mFusedLocationClient;
-    private LocationManager locationManager;
-    private LocationListener locationListener;
     private AutocompleteSupportFragment autocompleteFragment;
     static Place placee;
     private ImageView iGps;
     public TextView txsuccessful, txsearch;
-    private LatLng latLng, newLocation;
+    private LatLng latLng;
     private Address address, address2;
     public CameraPosition cameraPosition;
-    public static ViewModell viewModell;
+    public static ViewModellIsSupportedLocation viewModellIsSupportedLocation;
     private Button location;
     boolean mPremissionGranted = false;
     boolean mGpsEnabled = false;
     private View mapView;
-
-
-    String supportwdLocation1, country;
-    boolean issuppotted = false;
-    boolean gg = false;
     boolean closedialog = true;
-    boolean booleanPermission, l;
+
+    String  country;
+    boolean isSupported = false;
+    boolean iGpsShowFragment = false;
+    boolean booleanPermission;
     boolean booleanDeni = true;
     public static boolean checkLocationSupport = false;
-    DialogFragmenttt dialogFragment;
+    DialogIsSupported dialogFragment;
     Bundle bundle = new Bundle();
 
 
 
     private SupportwdLocationDetails supportwdLocationDetails = null;
 
-    static  String MODE_PRIVATE="lll";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,12 +85,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iGps = (ImageView) findViewById(R.id.ic_gps);
         txsearch = findViewById(R.id.input_search);
         txsuccessful = findViewById(R.id.txSuccessful);
-        gg = true;
+        iGpsShowFragment = true;
 
 
-        String languageToLoad = "ar";
-        Locale locale = new Locale(languageToLoad);
-        Locale.setDefault(locale);
         setupobserve();
         location = findViewById(R.id.location);
         initMap();
@@ -108,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         iGps.setOnClickListener(v -> {
 
             booleanPermission = false;
-            gg = false;
+            iGpsShowFragment = false;
             booleanDeni = false;
             closedialog = false;
             Permission();
@@ -116,30 +105,38 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             getDeviceLocation();
         });
         location.setOnClickListener(v -> {
-
-
-            if (issuppotted) {
-                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
-            } else {
-                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
-
-
-            }
-
-
+                getdialogFragment(isSupported, country);
         });
-        if (l) {
-            if (issuppotted) {
-                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
-            } else {
-                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
-
-            }
-        }
-
     }
 
+    /**
+      * Get the address of the country the camera is on
+     * @param country1
+     * @param lat
+     * @param lng
+     * @return
+     */
+    public String getCountry( String country1,double lat,double lng){
+        ArabicTranslation();
 
+        Geocoder geocoder;
+        List<Address> addresses = new ArrayList<>();
+        geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+        try {
+            addresses = geocoder.getFromLocation(lat,lng , 1);
+
+            if (addresses.size() > 0) {
+                country1 = addresses.get(0).getAddressLine(0);
+                Log.d("TAG", "onCameraMove/: " + country1);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        country1 = addresses.get(0).getAddressLine(0);
+        return  country1;
+
+    }
     /**
      * Search for places on the map
      */
@@ -147,27 +144,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     public void setPlacee() {
         final String TAG = "placeautocomplete";
         Places.initialize(getApplicationContext(), "AIzaSyDZBBzdhWw64zTG3F-sHCyrsdMTL_zvtXE");
-        PlacesClient placesClient = Places.createClient(this);
         autocompleteFragment = (AutocompleteSupportFragment)
                 getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
         autocompleteFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME));
 
 
         autocompleteFragment.setOnPlaceSelectedListener(new PlaceSelectionListener() {
-
-            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onPlaceSelected(@NonNull Place place) {
 
                 autocompleteFragment.a.extendSelection(0);
                 placee = place;
 
-
-                String languageToLoad = "ar";
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
                 String searchString = placee.getName();
                 txsearch.setText(searchString);
+                ArabicTranslation();
+
                 Geocoder geocoder = new Geocoder(MapsActivity.this);
                 List<Address> addressList = new ArrayList<>();
                 try {
@@ -178,9 +170,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 if (addressList.size() > 0) {
                     address = addressList.get(0);
                     addressList.get(0).toString();
+
                     Log.i("PlaceInfo", addressList.toString());
                     latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    //  mMap.getUiSettings().setZoomControlsEnabled(true);
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                     txsearch.setText(place.getName());
 
@@ -196,6 +188,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
+/**
+ *Translate the address to Arabic
+ */
+    }
+    public void ArabicTranslation(){
+        String languageToLoad = "ar";
+        Locale locale = new Locale(languageToLoad);
+        Locale.setDefault(locale);
 
     }
 
@@ -220,44 +220,22 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void onComplete(@NonNull Task task) {
                         if (task.isSuccessful()) {
-                            // Set the map's camera position to the current location of the device.
                             Location location = (Location) task.getResult();
                             if (location != null) {
                                 LatLng latLng = new LatLng(location.getLatitude(), location.getLongitude());
 
-                                String languageToLoad = "ar";
-                                Locale locale = new Locale(languageToLoad);
-                                Locale.setDefault(locale);
+                                ArabicTranslation();
                                 CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(
                                         latLng, 14);
                                 mMap.animateCamera(cameraUpdate);
                                 double lat = location.getLatitude();
                                 double lan = location.getLongitude();
-                                Geocoder geocoder;
-                                List<Address> addresses = new ArrayList<>();
-                                geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                                try {
-                                    addresses = geocoder.getFromLocation(lat, lan, 1);
-                                    if (addresses.size() > 0) {
-                                        country = addresses.get(0).getAddressLine(0);
-                                        Log.d("TAG", "onCameraMove/: " + country);
-                                        // searchText.setText(country);
-                                    }
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
+                                getCountry(country ,lat,lan);
 
-                                country = addresses.get(0).getAddressLine(0);
+                                if (iGpsShowFragment || booleanPermission) {
 
-                                if (gg || booleanPermission) {
+                                    getdialogFragment(isSupported, getCountry(country,latLng.latitude,latLng.longitude));
 
-                                    if (issuppotted) {
-                                        getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
-                                    } else {
-                                        getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
-
-
-                                    }
                                 }
                             }
                         }
@@ -284,49 +262,29 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 initMap();
                 if (checkPermission()) {
                     getDeviceLocation();
-                    //Toast.makeText(MapsActivity.this, "Permission Granted", Toast.LENGTH_SHORT).show();
                 }
             }
+
 
             @Override
             public void onPermissionDenied(List<String> deniedPermissions) {
                 mPremissionGranted = false;
+                ArabicTranslation();
                 LatLng latLng = new LatLng(26.2561426, 50.1820928);
                 if (booleanDeni) {
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
 
-                Geocoder geocoder;
-                String country1;
-                String languageToLoad = "ar";
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
+                String country1 = null;
 
-                List<Address> addresses = new ArrayList<>();
-                geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                try {
-                    addresses = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1);
-                    if (addresses.size() > 0) {
-                        country1 = addresses.get(0).getAddressLine(0);
-                        Log.d("TAG", "onCameraMove/: " + country1);
-                        // searchText.setText(country);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                if (isSupported || closedialog == false) {
 
-                country1 = addresses.get(0).getAddressLine(0);
-
-                l = true;
-                if (issuppotted || closedialog == false) {
-                    //  getdialogFragment(issuppotted, supportwdLocation1, "نوصل لك عالموقع الحالي؟");
                 } else {
-                    getdialogFragment(issuppotted, country1, "للأسف،  مكانك برا التغطية");
+                    getdialogFragment(isSupported, getCountry(country1,latLng.latitude,latLng.longitude));
 
 
                 }
 
-                // Toast.makeText(MapsActivity.this, "Permission Denied\n" + deniedPermissions.toString(), Toast.LENGTH_SHORT).show();
             }
         };
         TedPermission.with(this)
@@ -341,31 +299,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      */
 
     public void setupobserve() {
-        viewModell = new ViewModelProvider(this).get(ViewModell.class);
-        viewModell.getMutableLiveDataSupportwdLocation().observe(this, new Observer<SupportwdLocation>() {
+        viewModellIsSupportedLocation = new ViewModelProvider(this).get(ViewModellIsSupportedLocation.class);
+        viewModellIsSupportedLocation.getMutableLiveDataSupportwdLocation().observe(this, new Observer<SupportwdLocation>() {
             @Override
             public void onChanged(SupportwdLocation supportwdLocation) {
-                issuppotted = true;
+                isSupported = true;
                 checkLocationSupport = false;
-
                 txsuccessful.setText(supportwdLocation.getResult().getCity().getNameAr() + "," + supportwdLocation.getResult().getNameAr());
-                // txsearch.setText(supportwdLocation.getResult().getName() + supportwdLocation.getResult().getCity().getName());
                 location.setText(R.string.next);
                 txsuccessful.setBackgroundResource(R.drawable.bgtxissuccessful);
-                Log.d("tttttttt", supportwdLocation.getResult().getName());
 
             }
         });
 
 
-        viewModell.getMutableLiveDataError().observe(this, new Observer<ErrorResponse>() {
+        viewModellIsSupportedLocation.getMutableLiveDataError().observe(this, new Observer<ErrorResponse>() {
             @Override
             public void onChanged(ErrorResponse errorResponse) {
                 txsuccessful.setText(errorResponse.getMessageAr());
                 location.setText(R.string.bt_suggest_this_location);
-                issuppotted = false;
+                isSupported = false;
                 checkLocationSupport = false;
-
                 txsuccessful.setBackgroundResource(R.drawable.bgtxnotsuccessful);
             }
         });
@@ -378,8 +332,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
      * @param lan
      */
     public void location_setting(double lat, double lan) {
-        viewModell.getretrofit(lat, lan);
-        // viewModell.getDetail(supportwdLocationDetails);
+        viewModellIsSupportedLocation.getretrofit(lat, lan);
 
     }
 
@@ -387,24 +340,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             mGpsEnabled = false;
-            //showGPSDisabledAlertToUser();
-            String languageToLoad = "ar";
-            Locale locale = new Locale(languageToLoad);
-            Locale.setDefault(locale);
+            ArabicTranslation();
             booleanDeni = false;
-
-            // LatLng latLng = new LatLng(26.2561426, 50.1820928);
-            // mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
-            if (issuppotted) {
-                getdialogFragment(issuppotted, country, "نوصل لك عالموقع الحالي؟");
-            } else {
-                getdialogFragment(issuppotted, country, "للأسف،  مكانك برا التغطية");
-
-
-            }
-
-
-            Toast.makeText(this, "من فضلك قم بتفعيل GPS لنتمكن من تحديد موقعك ", Toast.LENGTH_SHORT).show();
+                getdialogFragment(isSupported, country);
+            Toast.makeText(this, R.string.openGPS, Toast.LENGTH_SHORT).show();
             return false;
         } else {
             mGpsEnabled = true;
@@ -415,107 +354,74 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     /**
      * Show the dialog fragment supported
-     * @param b
-     * @param s
-     * @param s2
+     * @param isSupported
+     * @param country
      */
-    public void getdialogFragment(boolean b, String s, String s2) {
+    public void getdialogFragment(boolean isSupported, String country) {
 
-        dialogFragment = new DialogFragmenttt();
+        dialogFragment = new DialogIsSupported();
         dialogFragment.show(getSupportFragmentManager(), null);
-      //  bundle.putString("user", s);
-        //viewModell.setString(s2);
-
-        viewModell.setCountry(s);
-        viewModell.setSupported(s2);
-        viewModell.setBoolean(b);
-
-
-        // bundle.putString("place", s2);
-      //  bundle.putBoolean("Status", b);
-
-
-        dialogFragment.setArguments(bundle);
-        // dialogFragment.dismiss();
-
-
+        viewModellIsSupportedLocation.setCountry(country);
+        viewModellIsSupportedLocation.setIsSupported(isSupported);
     }
+
 
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         mMap = googleMap;
-        String languageToLoad = "ar"; // your language
-        Locale locale = new Locale(languageToLoad);
-        Locale.setDefault(locale);
+
+        mMap.setOnCameraIdleListener(() -> {
 
 
-        mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
-            @Override
-            public void onCameraIdle() {
-                Geocoder geocoder = new Geocoder(MapsActivity.this);
-                cameraPosition = mMap.getCameraPosition();
-                String languageToLoad = "ar"; // your language
-                Locale locale = new Locale(languageToLoad);
-                Locale.setDefault(locale);
-                //    mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(cameraPosition.target,14));
-                List<Address> addressList = new ArrayList<>();
-                try {
-                    addressList = geocoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 1);
-                } catch (IOException e) {
-                    e.getMessage();
-                }
-                if (addressList.size() > 0) {
-                    address2 = addressList.get(0);
-                    addressList.get(0).toString();
-                    Log.i("PlaceInfo", addressList.toString());
-                    latLng = new LatLng(address2.getLatitude(), address2.getLongitude());
-                    String addressTitle;
+            Geocoder geocoder = new Geocoder(MapsActivity.this);
+            cameraPosition = mMap.getCameraPosition();
+            ArabicTranslation();
 
-                    if (address2.getSubLocality() != null) {
-                        addressTitle = address2.getSubLocality();
-                    } else {
+            List<Address> addressList = new ArrayList<>();
+            try {
+                addressList = geocoder.getFromLocation(cameraPosition.target.latitude, cameraPosition.target.longitude, 1);
+            } catch (IOException e) {
+                e.getMessage();
+            }
+            if (addressList.size() > 0) {
+                address2 = addressList.get(0);
+                addressList.get(0).toString();
 
-                        if (address2.getLocality() != null)
+                Log.i("PlaceInfo", addressList.toString());
+                latLng = new LatLng(address2.getLatitude(), address2.getLongitude());
+                String addressTitle;
+                if (address2.getSubLocality() != null) {
+                    addressTitle = address2.getSubLocality();
+                } else {
 
-                            addressTitle = address2.getLocality();
+                    if (address2.getLocality() != null)
 
-                        else {
-                            String[] titel = address2.getAddressLine(0).split(",");
-                            if (titel.length > 1) {
+                        addressTitle = address2.getLocality();
 
-                                addressTitle = (address2.getAddressLine(0).split(","))[1];
-                            } else
-                                addressTitle = address2.getAddressLine(0);
+                    else {
+                        String[] titel = address2.getAddressLine(0).split(",");
+                        if (titel.length > 1) {
 
-
-                        }
-
-                    }
-
-                    supportwdLocationDetails = new SupportwdLocationDetails(address2.getSubLocality(), address2.getAddressLine(0), false, cameraPosition.target.latitude, cameraPosition.target.longitude, 4, "other");
-
-                   // viewModell.setBasketMutableLiveData(supportwdLocationDetails);
-
-
-                    supportwdLocationDetails.setAddressTitle(addressTitle);
-                    bundle.putString("ll", supportwdLocationDetails.toString());
-                    if (checkLocationSupport) {
+                            addressTitle = (address2.getAddressLine(0).split(","))[1];
+                        } else
+                            addressTitle = address2.getAddressLine(0);
 
 
                     }
-                    location_setting(cameraPosition.target.latitude, cameraPosition.target.longitude);
-                    txsearch.setText(address2.getAddressLine(0));
-                    autocompleteFragment.setText("");
-
-                    // supportwdLocation3 = address2.getFeatureName() + address2.getCountryName() + address2.getLocality();
-                    country = address2.getAddressLine(0);
 
                 }
-                viewModell.setSupportwdLocationDetails(supportwdLocationDetails);
 
+                supportwdLocationDetails = new SupportwdLocationDetails(address2.getSubLocality(), address2.getAddressLine(0), false, cameraPosition.target.latitude, cameraPosition.target.longitude, 4, "other");
+                supportwdLocationDetails.setAddressTitle(addressTitle);
+                location_setting(cameraPosition.target.latitude, cameraPosition.target.longitude);
+                txsearch.setText(address2.getAddressLine(0));
+                autocompleteFragment.setText("");
+                country = address2.getAddressLine(0);
 
             }
+            viewModellIsSupportedLocation.setSupportwdLocationDetails(supportwdLocationDetails);
+
 
         });
 

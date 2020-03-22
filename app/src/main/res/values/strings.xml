@@ -9,4 +9,20 @@
     <string name="change_location">change location</string>
     <string name="let_us_know_your">Let us know Your</string>
     <string name="deliver">Deliver to current location?</string>
+    <string name="openGPS"> من فضلك قم بتفعيل GPS لنتمكن من تحديد موقعك</string>
+    <string name="SupportedLocation">نوصل لك عالموقع الحالي؟</string>
+    <string name="TheLocationChanged"> لا موقع ثاني</string>
+    <string name="goSary">يلا سارينا  </string>
+    <string name="notSupportedLocation">  للأسف،  مكانك برا التغطية</string>
+    <string name="anotherLocation">  غير موقعك</string>
+    <string name="introduceYourself"> عرفنا عليك </string>
+
+
+
+
+
+
+
+
+
 </resources>
