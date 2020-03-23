@@ -7,6 +7,9 @@
     <color name="tx_Successful_Start_Color"> #57d990</color>
     <color name="tx_Successful_end_Color">  #28d8b7 </color>
     <color name="tx_Not_Successful_Color">#FE7F7F</color>
+    <color name="tx_Sary_Start_Color">#fedd02</color>
+    <color name="tx_Sary_End_Color">#28d8b7</color>
+
 
 
 </resources>

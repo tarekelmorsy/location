@@ -15,6 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".ui.ConfirmNumber"></activity>
+        <activity android:name=".ui.UserName" />
+        <activity android:name=".ui.Phone_number" />
         <activity android:name=".ui.UsersPhone" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.

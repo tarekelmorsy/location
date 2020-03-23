@@ -85,7 +85,7 @@ public class DialogIsSupported extends androidx.fragment.app.DialogFragment {
                 @Override
                 public void onClick(View v) {
 
-                    Intent intent = new Intent(getContext(), UsersPhone.class);
+                    Intent intent = new Intent(getContext(),Phone_number.class);
                     startActivity(intent);
                 }
             });

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/start_bg_number_foreground"
+    tools:context=".ui.ConfirmNumber">
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="278dp"
+        android:layout_marginTop="69dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginBottom="554dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/sary_logo_foreground" />
+    android:background="@drawable/button2"
+
+    <TextView
+
+        android:id="@+id/textView4"
+
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="200dp"
+
+        android:layout_marginEnd="25dp"
+
+        android:fontFamily="@font/family_semi_round_bold"
+        android:gravity="end"
+        android:text=" تأكيد رقم الجوال"
+        android:textColor="#404040"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
+        android:layout_marginEnd="25dp"
+
+
+        android:fontFamily="@font/family_semi_round_medium"
+        android:gravity="end"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        android:text="اكتب الرمز اللي جاك"        />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView8">
+
+
+        <EditText
+            android:id="@+id/editText4"
+            android:layout_width="68dp"
+            android:layout_height="57dp"
+            android:gravity="center_horizontal|center_vertical"
+            android:background="@drawable/bgedinputnumber"
+
+            android:ems="10"
+            android:fontFamily="@font/family_semi_round_medium"
+            android:hint="_"
+            android:maxLines="1"
+            android:maxLength="1"
+            android:imeOptions="actionNext"
+            android:layout_marginLeft="7dp"
+            android:inputType="number"
+            android:textSize="14dp"
+           />
+        <EditText
+            android:layout_width="68dp"
+            android:layout_height="57dp"
+            android:id="@+id/editText5"
+            android:background="@drawable/bgedinputnumber"
+
+            android:gravity="center_horizontal|center|center_vertical"
+            android:ems="10"
+            android:imeOptions="actionNext"
+            android:maxLines="1"
+            android:maxLength="1"
+
+            android:fontFamily="@font/family_semi_round_medium"
+            android:hint="_"
+            android:layout_marginLeft="7dp"
+            android:inputType="number"
+            android:textSize="14dp"
+            />
+        <EditText
+            android:id="@+id/editText6"
+            android:layout_width="68dp"
+            android:imeOptions="actionNext"
+            android:layout_height="57dp"
+            android:gravity="center_horizontal|center|center_vertical"
+            android:ems="10"
+            android:maxLines="1"
+            android:maxLength="1"
+            android:background="@drawable/bgedinputnumber"
+
+            android:fontFamily="@font/family_semi_round_medium"
+            android:hint="_"
+            android:layout_marginLeft="7dp"
+            android:inputType="number"
+            android:textSize="14dp"
+            />
+        <EditText
+            android:id="@+id/editText7"
+            android:layout_width="68dp"
+            android:layout_height="57dp"
+            android:gravity="center_horizontal|center|center_vertical"
+            android:background="@drawable/bgedinputnumber"
+            android:ems="10"
+            android:maxLength="1"
+            android:fontFamily="@font/family_semi_round_medium"
+            android:hint="_"
+            android:layout_marginLeft="7dp"
+            android:inputType="number"
+            android:textSize="14dp"
+            />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_marginBottom="20dp"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textSize="14sp"
+
+            android:textColor="#5044b8"
+
+            android:gravity="end"
+            android:text="1:00   " />
+        <TextView
+
+            android:layout_width="wrap_content"
+
+            android:fontFamily="@font/family_semi_round_medium"
+            android:layout_height="wrap_content"
+
+            android:textSize="14sp"
+
+            android:textColor="#a6a6a6"
+
+            android:gravity="end"
+
+            android:text="يصل الكود خلال "
+
+            />
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btnextname"
+        android:layout_width="375dp"
+        android:layout_height="62dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginTop="22dp"
+        android:layout_marginEnd="21dp"
+        android:layout_marginBottom="300dp"
+        android:background="@drawable/bgbuttonnext"
+        android:fontFamily="@font/family_semi_round_bold"
+        android:text="التالي"
+        android:textColor="#ffffff"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
