@@ -63,7 +63,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     boolean mGpsEnabled = false;
     private View mapView;
     boolean closedialog = true;
-
     String  country;
     boolean isSupported = false;
     boolean iGpsShowFragment = false;
@@ -105,12 +104,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             getDeviceLocation();
         });
         location.setOnClickListener(v -> {
-                getdialogFragment(isSupported, country);
+            getdialogFragment(isSupported, country);
         });
     }
 
     /**
-      * Get the address of the country the camera is on
+     * Get the address of the country the camera is on
      * @param country1
      * @param lat
      * @param lng
@@ -275,7 +274,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15));
                 }
 
-                String country1 = null;
+                String country1="" ;
 
                 if (isSupported || closedialog == false) {
 
@@ -295,7 +294,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     /**
-     * setupobserve from view model
+     * setup observe from view model
      */
 
     public void setupobserve() {
@@ -342,7 +341,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             mGpsEnabled = false;
             ArabicTranslation();
             booleanDeni = false;
-                getdialogFragment(isSupported, country);
+            getdialogFragment(isSupported, country);
             Toast.makeText(this, R.string.openGPS, Toast.LENGTH_SHORT).show();
             return false;
         } else {

@@ -12,7 +12,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Client {
     private static final String BASE_URL = "https://testing.sary.co/api/";
     private static Retrofit INSTANCE;
-    private static Retrofit INSTANCE2;
 
 
 
@@ -43,6 +42,7 @@ public class Client {
         }
         return INSTANCE;
     }
+
 
 
 

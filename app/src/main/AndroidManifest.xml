@@ -15,7 +15,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.ConfirmNumber"></activity>
+        <activity android:name=".ui.VerifyNumber"></activity>
         <activity android:name=".ui.UserName" />
         <activity android:name=".ui.Phone_number" />
         <activity android:name=".ui.UsersPhone" />

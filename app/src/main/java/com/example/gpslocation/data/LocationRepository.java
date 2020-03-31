@@ -2,8 +2,8 @@ package com.example.gpslocation.data;
 
 import androidx.lifecycle.MutableLiveData;
 
-import com.example.gpslocation.model.ErrorResponse;
 import com.example.gpslocation.model.BasketLocation;
+import com.example.gpslocation.model.ErrorResponse;
 import com.example.gpslocation.model.SupportwdLocation;
 import com.example.gpslocation.model.SupportwdLocationDetails;
 
@@ -16,23 +16,24 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import retrofit2.Retrofit;
 
-public class Repository {
+public class LocationRepository {
 
-    private MutableLiveData<SupportwdLocation> mutableLiveData = new MutableLiveData<>();
+    private MutableLiveData<SupportwdLocation> supportdLocationMutableLiveData = new MutableLiveData<>();
 
     private MutableLiveData<ErrorResponse> errorResponseMutableLiveData = new MutableLiveData<>();
     private MutableLiveData<BasketLocation> basketMutableLiveData =new MutableLiveData<>();
 
-    private static Repository INSTANCE;
-    private static Repository INSTANCEDetail;
+
+
+    private static LocationRepository INSTANCE;
 
     private ApiInterface apiInterface;
 
 
 
-    public static Repository getINSTANCEe() {
+    public static LocationRepository getINSTANCEe() {
         if (null == INSTANCE){
-            INSTANCE = new Repository();
+            INSTANCE = new LocationRepository();
 
         }
 
@@ -41,19 +42,9 @@ public class Repository {
     }
 
 
-    public static Repository getINSTANCEDetail() {
-        if (null == INSTANCEDetail){
-            INSTANCEDetail = new Repository();
-
-        }
 
 
-        return INSTANCEDetail;
-    }
-
-
-
-    private Repository() {
+    private LocationRepository() {
 
         Retrofit retrofit = Client.getINSTANCE();
       apiInterface= retrofit.create(ApiInterface.class);
@@ -62,7 +53,7 @@ public class Repository {
 
 
     public MutableLiveData <SupportwdLocation> getMutableLiveDataSupportwdLocation(){
-        return mutableLiveData;
+        return supportdLocationMutableLiveData;
     }
 
     public MutableLiveData <BasketLocation> basketMutableLiveData(){
@@ -94,7 +85,6 @@ public class Repository {
             @Override
             public void onNext(BasketLocation isSupportwdLocation) {
                 basketMutableLiveData.setValue(isSupportwdLocation);
-              //  Log.d("lllll",isSupportwdLocation.getMessage());
 
 
             }
@@ -113,12 +103,13 @@ public class Repository {
 
     }
 
+
     /**
      * get Date from Support Location
      * @param lat
      * @param lon
      */
-    public void getData(final Double lat, Double lon) {
+    public void getSupportLocation(final Double lat, Double lon) {
         Observable observable = apiInterface.gitSuccessful(lat, lon)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -133,7 +124,7 @@ public class Repository {
             @Override
             public void onNext(SupportwdLocation supportwdLocations) {
                 if (supportwdLocations.getStatus()) {
-                    mutableLiveData.postValue(supportwdLocations);
+                    supportdLocationMutableLiveData.postValue(supportwdLocations);
                 }
 
 

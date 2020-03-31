@@ -69,6 +69,7 @@ public class DialogIsSupported extends androidx.fragment.app.DialogFragment {
                     @Override
                     public void onChanged(BasketLocation basketLocation) {
 
+
                     }
                 });
 
