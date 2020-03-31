@@ -41,9 +41,9 @@ public class VerifyNumber extends AppCompatActivity {
 
         setup();
 
-        new CountDownTimer(6000, 1000){
+        new CountDownTimer(60000, 1000){
             public void onTick(long millisUntilFinished){
-                timer.setText(String.valueOf(counter));
+                timer.setText("0:"+String.valueOf(counter));
                 counter--;
             }
             public  void onFinish(){
@@ -54,11 +54,11 @@ public class VerifyNumber extends AppCompatActivity {
                     public void onClick(View v) {
                         viewModellIsSupportedLocationll.getVerificationCode(getNumber());
                             counter = 60;
-                            new CountDownTimer(6000, 1000){
+                            new CountDownTimer(60000, 1000){
                                 public void onTick(long millisUntilFinished){
                                     counter--;
                                     code.setText("  يصل الكود خلال   ");
-                                    timer.setText(String.valueOf(counter));
+                                    timer.setText("0:"+String.valueOf(counter));
                                 }
                                 public  void onFinish(){
                                     code.setText("");
