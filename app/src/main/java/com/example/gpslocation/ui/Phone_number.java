@@ -65,6 +65,7 @@ public class Phone_number extends AppCompatActivity {
                 Intent intent = new Intent( Phone_number.this, VerifyNumber.class);
                 intent.putExtra("Phone_number", userNumber);
                 startActivity(intent);
+                    Toast.makeText(Phone_number.this, usersPhone.getMessageAr(), Toast.LENGTH_SHORT).show();
 
                 }
             }
